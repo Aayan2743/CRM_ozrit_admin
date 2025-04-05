@@ -552,11 +552,11 @@
      <script src="{{ URL::asset('build/plugins/ion-rangeslider/js/custom-rangeslider.js') }}"></script>
  @endif
 
- @if (Route::is(['ui-sweetalerts', 'audio-call', 'call-history', 'ui-ribbon', 'chat']))
+ <!-- @if (Route::is(['ui-sweetalerts', 'audio-call', 'call-history', 'ui-ribbon', 'chat'])) -->
      <!-- Sweetalert 2 -->
      <script src="{{ URL::asset('build/plugins/sweetalert/sweetalert2.all.min.js') }}"></script>
      <script src="{{ URL::asset('build/plugins/sweetalert/sweetalerts.min.js') }}"></script>
- @endif
+ <!-- @endif -->
 
  @if (Route::is(['ui-scrollbar']))
      <!-- Plyr JS -->

@@ -19,6 +19,9 @@ return new class extends Migration
             $table->string('name'); 
             $table->string('email')->unique(); 
             $table->string('password'); 
+            $table->string('phonenumber')->unique();
+            $table->string('whatsappnumber');
+            $table->date('expire_date');
             $table->enum('role', ['superadmin', 'admin', 'staff'])->default('staff'); 
             $table->string('company_id'); 
             $table->foreign('company_id')->references('company_id')->on('companies')->onDelete('cascade')->onUpdate('cascade');

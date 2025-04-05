@@ -7198,7 +7198,13 @@
         </button>
     </div>
     <div class="offcanvas-body">
-        <form action="companies">	
+        <style>
+            .danger{
+                color: red
+            }
+        </style>
+        <form id="createCompanyForm" action="{{ route('companies.store') }}" method="POST" enctype="multipart/form-data">
+           @csrf
             <div class="accordion" id="main_accordion">
                 <!-- Basic Info -->
                 <div class="accordion-item rounded mb-3">
@@ -7216,15 +7222,15 @@
                                         <div class="profile-upload">
                                             <div class="profile-upload-img">
                                                 <span><i class="ti ti-photo"></i></span>
-                                                <img src="{{URL::asset('/build/img/profiles/avatar-20.jpg')}}" alt="img" class="preview1">
-                                                <button type="button" class="profile-remove">
+                                                <img id="imagePreview"src="{{URL::asset('/build/img/profiles/avatar-20.jpg')}}" alt="img" class="preview1">
+                                                <button id="removeImage" type="button" class="profile-remove">
                                                     <i class="ti ti-x"></i>
                                                 </button>
                                             </div>
                                             <div class="profile-upload-content">
                                                 <label class="profile-upload-btn">
                                                     <i class="ti ti-file-broken"></i> Upload File 
-                                                    <input type="file" class="input-img">
+                                                    <input name="company_logo" type="file" class="input-img">
                                                 </label>
                                                 <p>JPG, GIF or PNG. Max size of 800K</p>
                                             </div>
@@ -7233,94 +7239,61 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="mb-3">
-                                        <label class="col-form-label">Company Name</label>
-                                        <input type="text" class="form-control">
+                                        <label class="col-form-label">Company Name <span class="danger">*</label>
+                                        <input  name="company_name" type="text" class="form-control">
+                                            @if ($errors->has('company_name'))
+                                                <div class="text-danger">{{ $errors->first('company_name') }}</div>
+                                            @endif
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <label class="col-form-label">Email <span class="text-danger">*</span></label>
-                                            <div class="status-toggle small-toggle-btn d-flex align-items-center">
-                                                <span class="me-2 label-text">Email Opt Out</span>
-                                                <input type="checkbox" id="user" class="check" checked="">
-                                                <label for="user" class="checktoggle"></label>
-                                            </div>
+                                            <label class="col-form-label">Email <span class="danger">*</span></label>
                                         </div>
-                                        <input type="text" class="form-control">
+                                        <input  name="email" type="text" class="form-control">
+                                        @if ($errors->has('email'))
+                                            <div class="text-danger">{{ $errors->first('email') }}</div>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label class="col-form-label">Phone 1 <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control">
+                                        <label class="col-form-label">Phone 1 <span class="danger">*</span></label>
+                                        <input  name="phone1" type="text" class="form-control">
+                                        @if ($errors->has('phone1'))
+                                            <div class="text-danger">{{ $errors->first('phone1') }}</div>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="col-form-label">Phone 2</label>
-                                        <input type="text" class="form-control">
+                                        <input  name="phone2" type="text" class="form-control">
                                     </div>
                                 </div>
+                               
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label class="col-form-label">Fax <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control">
+                                        <label class="col-form-label">Website <span class="danger">*</span></label>
+                                        <input  name="website" type="text" class="form-control">
+                                        @if ($errors->has('website'))
+                                            <div class="text-danger">{{ $errors->first('website') }}</div>
+                                        @endif
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="col-form-label">Website <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="col-form-label">Ratings</label>
-                                        <div class="icon-form-end">
-                                            <span class="form-icon"><i class="ti ti-star"></i></span>
-                                            <input type="text" class="form-control" placeholder="4.2">
-                                        </div>
-                                    </div>
-                                </div>
+                               
                                 <div class="col-md-6">
                                     <div class="fmb-3">
-                                        <label class="col-form-label">Owner</label>
-                                        <select class="select-img">
-                                            <option data-image="build/img/profiles/avatar-14.jpg" selected>Jerald</option>
-                                            <option data-image="build/img/profiles/avatar-15.jpg">Guillory</option>
-                                            <option data-image="build/img/profiles/avatar-16.jpg">Jami</option>
-                                            <option data-image="build/img/profiles/avatar-13.jpg">Theresa</option>
-                                            <option data-image="build/img/profiles/avatar-24.jpg">Espinosa</option>
-                                        </select>
+                                    <label class="col-form-label">Owner</label>
+                                    <input  name="owner" type="text" class="form-control">
                                     </div>
                                 </div>
+                               
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label class="col-form-label">Tags </label>
-                                        <input class="input-tags form-control" type="text" data-role="tagsinput"  name="Label" value="Collab" >	
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <label class="col-form-label">Deals</label>
-                                            <a href="#" class="label-add" data-bs-toggle="offcanvas" data-bs-target="#offcanvas_add_2"><i class="ti ti-square-rounded-plus"></i>Add New</a>
-                                        </div>
-                                        <select class="select2">
-                                            <option>Choose</option>
-                                            <option>Collins</option>
-                                            <option>Konopelski</option>
-                                            <option>Adams</option>
-                                            <option>Schumm</option>
-                                            <option>Wisozk</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="col-form-label">Source <span class="text-danger">*</span></label>
-                                        <select class="select2">
+                                        <label class="col-form-label">Source <span class="danger">*</span></label>
+                                        <select name="source" class="select2">
                                             <option>Choose</option>
                                             <option>Phone Calls</option>
                                             <option>Social Media</option>
@@ -7328,12 +7301,16 @@
                                             <option>Web Analytics</option>
                                             <option>Previous Purchases</option>
                                         </select>
+                                        @if ($errors->has('source'))
+                                            <div class="text-danger">{{ $errors->first('source') }}</div>
+                                        @endif
                                     </div>
                                 </div>
+
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label class="col-form-label">Industry <span class="text-danger">*</span></label>
-                                        <select class="select">
+                                        <label class="col-form-label">Industry <span class="danger">*</span></label>
+                                        <select name="industry" class="select">
                                             <option>Choose</option>
                                             <option>Retail Industry</option>
                                             <option>Banking</option>
@@ -7341,44 +7318,15 @@
                                             <option>Financial Services</option>
                                             <option>Insurance</option>
                                         </select>
+                                        @if ($errors->has('industry'))
+                                            <div class="text-danger">{{ $errors->first('industry') }}</div>
+                                        @endif
                                     </div>
                                 </div>
-                                <div class="col-md-12">
-                                    <div class="mb-3">
-                                        <label class="col-form-label">Contacts</label>
-                                        <select class="multiple-img" multiple="multiple">
-                                            <option data-image="build/img/profiles/avatar-19.jpg">Darlee Robertson</option>
-                                            <option data-image="build/img/profiles/avatar-20.jpg" selected>Sharon Roy</option>
-                                            <option data-image="build/img/profiles/avatar-21.jpg">Vaughan</option>
-                                            <option data-image="build/img/profiles/avatar-23.jpg">Jessica</option>
-                                            <option data-image="build/img/profiles/avatar-16.jpg">Carol Thomas</option>
-                                        </select>
+
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="col-form-label">Currency <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="col-form-label">Language <span class="text-danger">*</span></label>
-                                        <select class="select">
-                                            <option>Choose</option>
-                                            <option>English</option>
-                                            <option>Arabic</option>
-                                            <option>Chinese</option>
-                                            <option>Hindi</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="mb-0">
-                                        <label class="col-form-label">Description <span class="text-danger">*</span></label>
-                                        <textarea class="form-control" rows="5"></textarea>
-                                    </div>
-                                </div>
+                            
+                                
                             </div>
                         </div>
                     </div>
@@ -7399,25 +7347,25 @@
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <label class="col-form-label">Street Address </label>
-                                        <input type="text" class="form-control">
+                                        <input  name="street_address" type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="col-form-label">City </label>
-                                        <input type="text" class="form-control">
+                                        <input  name="city" type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="col-form-label">State / Province </label>
-                                        <input type="text" class="form-control">
+                                        <input name="state_province"  type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3 mb-md-0">
                                         <label class="col-form-label">Country</label>
-                                        <select class="select">
+                                        <select name="country"  class="select">
                                             <option>Choose</option>
                                             <option>India</option>
                                             <option>USA</option>
@@ -7430,7 +7378,7 @@
                                 <div class="col-md-6">
                                     <div class="mb-0">
                                         <label class="col-form-label">Zipcode </label>
-                                        <input type="text" class="form-control">
+                                        <input  name="zipcode" type="text" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -7453,37 +7401,37 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="col-form-label">Facebook</label>
-                                        <input type="text" class="form-control">
+                                        <input  name="facebook" type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="col-form-label">Skype </label>
-                                        <input type="text" class="form-control">
+                                        <input  name="skype" type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="col-form-label">Linkedin </label>
-                                        <input type="text" class="form-control">
+                                        <input  name="linkedin" type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="col-form-label">Twitter</label>
-                                        <input type="text" class="form-control">
+                                        <input  name="twitter" type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3 mb-md-0">
                                         <label class="col-form-label">Whatsapp</label>
-                                        <input type="text" class="form-control">
+                                        <input name="whatsapp" type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-0">
                                         <label class="col-form-label">Instagram</label>
-                                        <input type="text" class="form-control">
+                                        <input  name="instagram" type="text" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -7492,66 +7440,117 @@
                 </div>
                 <!-- /Social Profile -->
 
-                <!-- Access -->
-                <div class="accordion-item border-top rounded mb-3">
-                    <div class="accordion-header">
-                        <a href="#" class="accordion-button accordion-custom-button rounded bg-white fw-medium text-dark" data-bs-toggle="collapse" data-bs-target="#access-info">
-                            <span class="avatar avatar-md rounded text-dark border me-2"><i class="ti ti-accessible fs-20"></i></span>
-                            Access
-                        </a>
-                    </div>							
-                    <div class="accordion-collapse collapse" id="access-info" data-bs-parent="#main_accordion">
-                        <div class="accordion-body border-top">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="mb-3">
-                                        <label class="col-form-label">Visibility</label>
-                                        <div class="d-flex flex-wrap">
-                                            <div class="me-2">
-                                                <input type="radio" class="status-radio" id="public" name="visible">
-                                                <label for="public">Public</label>
-                                            </div>
-                                            <div class="me-2">
-                                                <input type="radio" class="status-radio" id="private" name="visible">
-                                                <label for="private">Private</label>
-                                            </div>
-                                            <div data-bs-toggle="modal" data-bs-target="#access_view">
-                                                <input type="radio" class="status-radio" id="people" name="visible">
-                                                <label for="people">Select People</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-0">
-                                        <label class="col-form-label">Status</label>
-                                        <div class="d-flex flex-wrap">
-                                            <div class="me-2">
-                                                <input type="radio" class="status-radio" id="active" name="status" checked="">
-                                                <label for="active">Active</label>
-                                            </div>
-                                            <div>
-                                                <input type="radio" class="status-radio" id="inactive" name="status">
-                                                <label for="inactive">Inactive</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /Access -->
+             
             </div>
-            <div class="d-flex align-items-center justify-content-end">
+            <div class="d-flex align-items-center justify-content-center mb-2">
                 <button type="button" data-bs-dismiss="offcanvas" class="btn btn-light me-2">Cancel</button>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create_success">Create</button>
+                <button type="submit" class="btn btn-primary">Create</button>
             </div>
         </form>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <script>
+            $(document).ready(function() {
+                // Handle image preview on file input change
+                $('#companyLogoInput').change(function(event) {
+                    const file = event.target.files[0];
+
+                    if (file) {
+                        const reader = new FileReader();
+
+                        reader.onload = function(e) {
+                            $('#imagePreview').attr('src', e.target.result).show();
+                            $('#removeImage').show();  // Show the remove button
+                        };
+
+                        reader.readAsDataURL(file);
+                    }
+                });
+
+                // Remove the image preview
+                $('#removeImage').click(function() {
+                    $('#companyLogoInput').val('');  // Clear the file input
+                    $('#imagePreview').hide();  // Hide the preview
+                    $(this).hide();  // Hide the remove button
+                });
+
+                // Intercept form submission
+                $('#createCompanyForm').submit(function(e) {
+                    e.preventDefault();  // Prevent the default form submission
+
+                    let form = $(this);
+                    let formData = new FormData(this);  // Get all form data
+
+                    $.ajax({
+                        url: form.attr('action'),  // Use the form action for URL
+                        type: form.attr('method'),  // Use form method (POST or PUT)
+                        data: formData,
+                        processData: false,  // Don't process the data
+                        contentType: false,  // Don't set content-type header
+                        success: function(response) {
+                            if (response.status === 'success') {
+                                // Show success alert using SweetAlert
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Company Created!',
+                                    text: response.message,  // Success message from the controller
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        // Close the popup (offcanvas or modal)
+                                        $('#offcanvas_add').offcanvas('hide');  // Close the offcanvas (replace with your modal close logic if needed)
+
+                                        // Reset the form after success
+                                        form[0].reset();  // Reset the form fields
+
+                                        // Reset the image preview
+                                        $('#imagePreview').hide();  // Hide the preview image
+                                        $('#removeImage').hide();  // Hide the remove button
+
+                                        // Clear validation error messages
+                                        $('.text-danger').empty();
+                                        location.reload();
+
+                                    }
+                                });
+                            } else {
+                                // Handle server-side errors (if status is not 'success')
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: 'Something went wrong, please try again later.',
+                                });
+                            }
+                        },
+                        error: function(xhr) {
+                            // Handle validation errors (response from server)
+                            let errors = xhr.responseJSON.errors;
+                            $('.text-danger').empty();  // Clear existing error messages
+
+                            // Loop through each field error and display the message
+                            for (let field in errors) {
+                                // Find the respective error message div for each field
+                                let errorDiv = $(`[name=${field}]`).next('.text-danger');
+                                if (errorDiv.length === 0) {
+                                    // If no error message div is found, create one
+                                    errorDiv = $(`[name=${field}]`).after('<div class="text-danger"></div>').next('.text-danger');
+                                }
+                                errorDiv.text(errors[field][0]);  // Add the error message to the field
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
+
+
+
     </div>
 </div>
 <!-- /Add Company -->
 
 <!-- Edit Company -->
-<div class="offcanvas offcanvas-end offcanvas-large" tabindex="-1" id="offcanvas_edit">
+<div class="offcanvas offcanvas-end offcanvas-large" tabindex="-1" id="offcanvas_edit_company">
     <div class="offcanvas-header border-bottom">
         <h5 class="fw-semibold">Edit Company</h5>
         <button type="button" class="btn-close custom-btn-close border p-1 me-0 d-flex align-items-center justify-content-center rounded-circle" data-bs-dismiss="offcanvas" aria-label="Close">
@@ -7559,7 +7558,9 @@
         </button>
     </div>
     <div class="offcanvas-body">
-        <form action="companies">	
+    <form id="editCompanyForm" action="{{ route('company.edit') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <input type="hidden" name="client_id" id="client_id">
             <div class="accordion" id="main_accordion">
                 <!-- Basic Info -->
                 <div class="accordion-item rounded mb-3">
@@ -7577,7 +7578,7 @@
                                         <div class="profile-upload">
                                             <div class="profile-upload-img">
                                                 <span><i class="ti ti-photo"></i></span>
-                                                <img src="{{URL::asset('/build/img/profiles/avatar-20.jpg')}}" alt="img" class="preview1">
+                                                <img name="company_logo"id="company_logo" src="{{URL::asset('/build/img/profiles/avatar-20.jpg')}}" alt="img" class="preview1">
                                                 <button type="button" class="profile-remove">
                                                     <i class="ti ti-x"></i>
                                                 </button>
@@ -7594,94 +7595,46 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="mb-3">
-                                        <label class="col-form-label">Company Name</label>
-                                        <input type="text" class="form-control" value="NovaWave LLC">
+                                        <label class="col-form-label">Company Name <span class="text-danger">*</span></label>
+                                        <input name="company_name" id="company_name" type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <label class="col-form-label">Email <span class="text-danger">*</span></label>
-                                            <div class="status-toggle small-toggle-btn d-flex align-items-center">
-                                                <span class="me-2 label-text">Email Opt Out</span>
-                                                <input type="checkbox" id="user" class="check" checked="">
-                                                <label for="user" class="checktoggle"></label>
-                                            </div>
                                         </div>
-                                        <input type="text" class="form-control" value="robertson@example.com">
+                                        <input name="email"id="email"type="text" class="form-control" >
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="col-form-label">Phone 1 <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" value="1234567890">
+                                        <input name="phone1"id="phone1"type="text" class="form-control" >
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="col-form-label">Phone 2</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="col-form-label">Fax <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control">
+                                        <input name="phone2"id="phone2"type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="col-form-label">Website <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="col-form-label">Ratings</label>
-                                        <div class="icon-form-end">
-                                            <span class="form-icon"><i class="ti ti-star"></i></span>
-                                            <input type="text" class="form-control" placeholder="4.2">
-                                        </div>
+                                        <input name="website"id="website"type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="fmb-3">
                                         <label class="col-form-label">Owner</label>
-                                        <select class="select-img">
-                                            <option data-image="build/img/profiles/avatar-14.jpg" selected>Jerald</option>
-                                            <option data-image="build/img/profiles/avatar-15.jpg">Guillory</option>
-                                            <option data-image="build/img/profiles/avatar-16.jpg">Jami</option>
-                                            <option data-image="build/img/profiles/avatar-13.jpg">Theresa</option>
-                                            <option data-image="build/img/profiles/avatar-24.jpg">Espinosa</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="col-form-label">Tags </label>
-                                        <input class="input-tags form-control" type="text" data-role="tagsinput"  name="Label" value="Collab" >	
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <label class="col-form-label">Deals</label>
-                                            <a href="#" class="label-add" data-bs-toggle="offcanvas" data-bs-target="#offcanvas_add_2"><i class="ti ti-square-rounded-plus"></i>Add New</a>
-                                        </div>
-                                        <select class="select2">
-                                            <option>Choose</option>
-                                            <option>Collins</option>
-                                            <option>Konopelski</option>
-                                            <option>Adams</option>
-                                            <option>Schumm</option>
-                                            <option>Wisozk</option>
-                                        </select>
+                                        <input name="owner"id="owner"type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="col-form-label">Source <span class="text-danger">*</span></label>
-                                        <select class="select2">
+                                        <select name="source"id="source"class="select2">
                                             <option>Choose</option>
                                             <option>Phone Calls</option>
                                             <option>Social Media</option>
@@ -7694,7 +7647,7 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="col-form-label">Industry <span class="text-danger">*</span></label>
-                                        <select class="select">
+                                        <select name="industry"id="industry"class="select">
                                             <option>Choose</option>
                                             <option>Retail Industry</option>
                                             <option>Banking</option>
@@ -7702,42 +7655,6 @@
                                             <option>Financial Services</option>
                                             <option>Insurance</option>
                                         </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="mb-3">
-                                        <label class="col-form-label">Contacts</label>
-                                        <select class="multiple-img" multiple="multiple">
-                                            <option data-image="build/img/profiles/avatar-19.jpg">Darlee Robertson</option>
-                                            <option data-image="build/img/profiles/avatar-20.jpg" selected>Sharon Roy</option>
-                                            <option data-image="build/img/profiles/avatar-21.jpg">Vaughan</option>
-                                            <option data-image="build/img/profiles/avatar-23.jpg">Jessica</option>
-                                            <option data-image="build/img/profiles/avatar-16.jpg">Carol Thomas</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="col-form-label">Currency <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="col-form-label">Language <span class="text-danger">*</span></label>
-                                        <select class="select">
-                                            <option>Choose</option>
-                                            <option>English</option>
-                                            <option>Arabic</option>
-                                            <option>Chinese</option>
-                                            <option>Hindi</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="mb-0">
-                                        <label class="col-form-label">Description <span class="text-danger">*</span></label>
-                                        <textarea class="form-control" rows="5"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -7760,25 +7677,25 @@
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <label class="col-form-label">Street Address </label>
-                                        <input type="text" class="form-control" value="22, Ave Street">
+                                        <input name="street_address" id="street_address"type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="col-form-label">City </label>
-                                        <input type="text" class="form-control" value="Denver">
+                                        <input name="city"id="city"type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="col-form-label">State / Province </label>
-                                        <input type="text" class="form-control" value="Colorado">
+                                        <input name="state_province"id="state_province"type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3 mb-md-0">
                                         <label class="col-form-label">Country</label>
-                                        <select class="select">
+                                        <select name="country"id="country"class="select">
                                             <option>Choose</option>
                                             <option>India</option>
                                             <option selected>USA</option>
@@ -7791,7 +7708,7 @@
                                 <div class="col-md-6">
                                     <div class="mb-0">
                                         <label class="col-form-label">Zipcode </label>
-                                        <input type="text" class="form-control">
+                                        <input name="zipcode"id="zipcode"type="text" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -7814,37 +7731,37 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="col-form-label">Facebook</label>
-                                        <input type="text" class="form-control">
+                                        <input name="facebook"id="facebook"type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="col-form-label">Skype </label>
-                                        <input type="text" class="form-control">
+                                        <input name="skype"id="skype"type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="col-form-label">Linkedin </label>
-                                        <input type="text" class="form-control">
+                                        <input name="linkedin"id="linkedin"type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="col-form-label">Twitter</label>
-                                        <input type="text" class="form-control">
+                                        <input name="twitter"id="twitter"type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3 mb-md-0">
                                         <label class="col-form-label">Whatsapp</label>
-                                        <input type="text" class="form-control" value="1234567890">
+                                        <input name="whatsapp"id="whatsapp"type="text" class="form-control" >
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-0">
                                         <label class="col-form-label">Instagram</label>
-                                        <input type="text" class="form-control">
+                                        <input name="instagram"id="instagram"type="text" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -7853,66 +7770,154 @@
                 </div>
                 <!-- /Social Profile -->
 
-                <!-- Access -->
-                <div class="accordion-item border-top rounded mb-3">
-                    <div class="accordion-header">
-                        <a href="#" class="accordion-button accordion-custom-button rounded bg-white fw-medium text-dark" data-bs-toggle="collapse" data-bs-target="#access-info">
-                            <span class="avatar avatar-md rounded text-dark border me-2"><i class="ti ti-accessible fs-20"></i></span>
-                            Access
-                        </a>
-                    </div>							
-                    <div class="accordion-collapse collapse" id="access-info" data-bs-parent="#main_accordion">
-                        <div class="accordion-body border-top">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="mb-3">
-                                        <label class="col-form-label">Visibility</label>
-                                        <div class="d-flex flex-wrap">
-                                            <div class="me-2">
-                                                <input type="radio" class="status-radio" id="public" name="visible">
-                                                <label for="public">Public</label>
-                                            </div>
-                                            <div class="me-2">
-                                                <input type="radio" class="status-radio" id="private" name="visible">
-                                                <label for="private">Private</label>
-                                            </div>
-                                            <div data-bs-toggle="modal" data-bs-target="#access_view">
-                                                <input type="radio" class="status-radio" id="people" name="visible">
-                                                <label for="people">Select People</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-0">
-                                        <label class="col-form-label">Status</label>
-                                        <div class="d-flex flex-wrap">
-                                            <div class="me-2">
-                                                <input type="radio" class="status-radio" id="active" name="status" checked="">
-                                                <label for="active">Active</label>
-                                            </div>
-                                            <div>
-                                                <input type="radio" class="status-radio" id="inactive" name="status">
-                                                <label for="inactive">Inactive</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /Access -->
             </div>
-            <div class="d-flex align-items-center justify-content-end">
+            <div class="d-flex align-items-center justify-content-center mb-2">
                 <button type="button" data-bs-dismiss="offcanvas" class="btn btn-light me-2">Cancel</button>
-                <button type="button" class="btn btn-primary">Save Changes</button>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
             </div>
         </form>
+        <script>
+        $(document).ready(function () {
+                // Trigger when offcanvas for company edit is shown
+                $('#offcanvas_edit_company').on('shown.bs.offcanvas', function (e) {
+                    var button = $(e.relatedTarget);  // The button that triggered the offcanvas
+                    var companyId = button.data('client-id');
+                    var companyName = button.data('company-name');
+                    var companyLogo = button.data('company-logo');
+                    var address = button.data('street-address');
+                    var phone = button.data('phone');
+                    var phone2 = button.data('phone2');
+                    var email = button.data('email');
+                    var website = button.data('website');
+                    var owner = button.data('owner');
+                    var source = button.data('source');
+                    var industry = button.data('industry');
+                    var status = button.data('status');
+                    var createdDate = button.data('created-date');
+                    var city = button.data('city');
+                    var stateProvince = button.data('state-province');
+                    var country = button.data('country');
+                    var zipcode = button.data('zipcode');
+                    var facebook = button.data('facebook');
+                    var skype = button.data('skype');
+                    var linkedin = button.data('linkedin');
+                    var twitter = button.data('twitter');
+                    var whatsapp = button.data('whatsapp');
+                    var instagram = button.data('instagram');
+
+                    var modal = $(this);
+                    modal.find('#street_address').val(address); 
+                    // Populate the form fields with company data
+                    $('#client_id').val(companyId);
+                    $('#company_name').val(companyName);
+                    $('#company_logo').val(companyLogo);
+                    $('.preview1').attr('src', companyLogo || '/build/img/profiles/avatar-20.jpg');
+                    $('#phone1').val(phone);
+                    $('#phone2').val(phone2);
+                    $('#email').val(email);
+                    $('#website').val(website);
+                    $('#owner').val(owner);
+                    $('#source').val(source);
+                    $('#industry').val(industry);
+                    $('#status').val(status);
+                    $('#created_date').val(createdDate);
+                    $('#city').val(city);
+                    $('#state_province').val(stateProvince);
+                    $('#country').val(country);
+                    $('#zipcode').val(zipcode);
+                    $('#facebook').val(facebook);
+                    $('#skype').val(skype);
+                    $('#linkedin').val(linkedin);
+                    $('#twitter').val(twitter);
+                    $('#whatsapp').val(whatsapp);
+                    $('#instagram').val(instagram);
+
+                    console.log('Company Data: ', {
+                        companyId, companyName, companyLogo, address, phone, phone2, email,
+                        website, owner, source, industry, status, createdDate, city,
+                        stateProvince, country, zipcode, facebook, skype, linkedin, twitter,
+                        whatsapp, instagram
+                    });
+                });
+
+                // Preview image after file selection
+                $('input[type="file"]').change(function (e) {
+                    const file = e.target.files[0];
+                    if (file && file.type.startsWith('image/')) {
+                        const reader = new FileReader();
+                        reader.onload = function (event) {
+                            $('.preview1').attr('src', event.target.result);  // Update the preview image
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+
+                // Remove the uploaded image
+                $('.profile-remove').click(function () {
+                    $('.preview1').attr('src', '/build/img/profiles/avatar-20.jpg');  // Reset image
+                    $('input[type="file"]').val('');  // Reset the file input
+                });
+
+                // Handle form submission for company edit
+                $('#editCompanyForm').submit(function (e) {
+                    e.preventDefault();  // Prevent default form submission
+
+                    var formData = $(this).serialize();  // Serialize form data
+
+                    $.ajax({
+                        url: '{{ route('company.edit') }}',  // Ensure this is the correct URL from your route
+                        method: 'POST',
+                        data: formData,
+                        success: function (response) {
+                            if (response) {
+                                $('#offcanvas_edit_company').offcanvas('hide');  // Close the offcanvas
+                                Swal.fire(
+                                    'Updated!',
+                                    'Company updated successfully!',
+                                    'success'
+                                ).then(() => {
+                                    location.reload(); // Reload the page after success
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error!',
+                                    text: response.message || 'An error occurred while updating the company.',
+                                });
+                            }
+                        },
+                        error: function (xhr) {
+                            var errors = xhr.responseJSON.errors;
+                            if (errors) {
+                                var errorMessage = '';
+                                for (var key in errors) {
+                                    errorMessage += errors[key][0] + "\n";
+                                }
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Validation Error!',
+                                    text: errorMessage,
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'An error occurred!',
+                                    text: 'Please try again.',
+                                });
+                            }
+                        }
+                    });
+                });
+            });
+
+        </script>
+
     </div>
 </div>
 <!-- /Edit Company -->
 
 <!-- Delete Company -->
-<div class="modal fade" id="delete_contact" role="dialog">
+<div class="modal fade" id="delete_company" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
@@ -7922,10 +7927,67 @@
                     </div>
                     <h4 class="mb-2">Remove Company?</h4>
                     <p class="mb-0">Are you sure you want to remove <br> company you selected.</p>
-                    <div class="d-flex align-items-center justify-content-center mt-4">
+                    <form id="delete-form" method="POST" action="{{ route('company.delete') }}">
+                        @csrf
+                        <input type="hidden" name="client_id" id="client_id">
                         <a href="#" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</a>
-                        <a href="{{url('companies')}}" class="btn btn-danger">Yes, Delete it</a>
-                    </div>
+                        <button  type="submit" class="btn btn-danger">Yes, Delete it</button>
+                    </form>
+                    <script>
+                    $(document).ready(function () {
+                        // Show modal with the correct lead ID
+                        $('#delete_company').on('show.bs.modal', function (event) {
+                            var button = $(event.relatedTarget); // Button that triggered the modal
+                            var leadId = button.data('client-id'); // Extract lead-id from data attribute
+                            console.log('Company ID:', leadId); // Debugging: log the ID to check if it's correct
+
+                            var modal = $(this);
+                            modal.find('#client_id').val(leadId); // Set the lead-id in the form's hidden input field
+                        });
+
+                        // Handle the form submission using SweetAlert for confirmation
+                        $('#delete-form').submit(function (e) {
+                            e.preventDefault(); // Prevent default form submission
+
+                            // Get the form and form data
+                            var form = $(this);
+                            var formData = new FormData(form[0]); // Collect form data
+                            
+                            // Send AJAX request
+                            $.ajax({
+                                url: form.attr('action'),  // Use the form action for URL
+                                type: form.attr('method'),  // Use form method (POST or DELETE)
+                                data: formData,
+                                processData: false,  // Don't process the data
+                                contentType: false,  // Don't set content-type header
+                                success: function(response) {
+                                    if (response.status === 'success') {
+                                        Swal.fire(
+                                            'Deleted!',
+                                            'The Company has been deleted.',
+                                            'success'
+                                        ).then(() => {
+                                            location.reload(); // Reload the page after deletion success
+                                        });
+                                    } else {
+                                        Swal.fire(
+                                            'Error!',
+                                            'There was an issue deleting the company.',
+                                            'error'
+                                        );
+                                    }
+                                },
+                                error: function() {
+                                    Swal.fire(
+                                        'Error!',
+                                        'An unexpected error occurred.',
+                                        'error'
+                                    );
+                                }
+                            });
+                        });
+                    });
+                    </script>
                 </div>
             </div>
         </div>
@@ -23612,180 +23674,361 @@
 
 <!-- Edit Lead -->
 <div class="offcanvas offcanvas-end offcanvas-large" tabindex="-1" id="offcanvas_edit">
-    <div class="offcanvas-header border-bottom">
-        <h5 class="fw-semibold">Add New Lead</h5>
+<div class="offcanvas-header border-bottom">
+        <h5 class="fw-semibold">Add New Company</h5>
         <button type="button" class="btn-close custom-btn-close border p-1 me-0 d-flex align-items-center justify-content-center rounded-circle" data-bs-dismiss="offcanvas" aria-label="Close">
             <i class="ti ti-x"></i>
         </button>
     </div>
     <div class="offcanvas-body">
-        <form action="contacts">	
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="mb-3">
-                        <label class="col-form-label">Lead Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" value="Collins">
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="mb-3">
-                        <div class="radio-wrap">
-                            <label class="col-form-label">Lead Type</label>
-                            <div class="d-flex flex-wrap">
-                                <div class="me-2">
-                                    <input type="radio" class="status-radio" id="person" name="leave" checked>
-                                    <label for="person">Person</label>
+        <form action="companies">	
+            <div class="accordion" id="main_accordion">
+                <!-- Basic Info -->
+                <div class="accordion-item rounded mb-3">
+                    <div class="accordion-header">
+                        <a href="#" class="accordion-button accordion-custom-button bg-white rounded fw-medium text-dark" data-bs-toggle="collapse" data-bs-target="#basic">
+                            <span class="avatar avatar-md rounded text-dark border me-2"><i class="ti ti-user-plus fs-20"></i></span>
+                            Basic Info
+                        </a>
+                    </div>							
+                    <div class="accordion-collapse collapse show" id="basic" data-bs-parent="#main_accordion">
+                        <div class="accordion-body border-top">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <div class="profile-upload">
+                                            <div class="profile-upload-img">
+                                                <span><i class="ti ti-photo"></i></span>
+                                                <img src="{{URL::asset('/build/img/profiles/avatar-20.jpg')}}" alt="img" class="preview1">
+                                                <button type="button" class="profile-remove">
+                                                    <i class="ti ti-x"></i>
+                                                </button>
+                                            </div>
+                                            <div class="profile-upload-content">
+                                                <label class="profile-upload-btn">
+                                                    <i class="ti ti-file-broken"></i> Upload File 
+                                                    <input type="file" class="input-img">
+                                                </label>
+                                                <p>JPG, GIF or PNG. Max size of 800K</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div>
-                                    <input type="radio" class="status-radio" id="Organization" name="leave">
-                                    <label for="Organization">Organization</label>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="col-form-label">Company Name</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <label class="col-form-label">Email <span class="text-danger">*</span></label>
+                                            <div class="status-toggle small-toggle-btn d-flex align-items-center">
+                                                <span class="me-2 label-text">Email Opt Out</span>
+                                                <input type="checkbox" id="user" class="check" checked="">
+                                                <label for="user" class="checktoggle"></label>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="col-form-label">Phone 1 <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="col-form-label">Phone 2</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="col-form-label">Fax <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="col-form-label">Website <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="col-form-label">Ratings</label>
+                                        <div class="icon-form-end">
+                                            <span class="form-icon"><i class="ti ti-star"></i></span>
+                                            <input type="text" class="form-control" placeholder="4.2">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="fmb-3">
+                                        <label class="col-form-label">Owner</label>
+                                        <select class="select-img">
+                                            <option data-image="build/img/profiles/avatar-14.jpg" selected>Jerald</option>
+                                            <option data-image="build/img/profiles/avatar-15.jpg">Guillory</option>
+                                            <option data-image="build/img/profiles/avatar-16.jpg">Jami</option>
+                                            <option data-image="build/img/profiles/avatar-13.jpg">Theresa</option>
+                                            <option data-image="build/img/profiles/avatar-24.jpg">Espinosa</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="col-form-label">Tags </label>
+                                        <input class="input-tags form-control" type="text" data-role="tagsinput"  name="Label" value="Collab" >	
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <label class="col-form-label">Deals</label>
+                                        </div>
+                                        <select class="select2">
+                                            <option>Choose</option>
+                                            <option>Collins</option>
+                                            <option>Konopelski</option>
+                                            <option>Adams</option>
+                                            <option>Schumm</option>
+                                            <option>Wisozk</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="col-form-label">Source <span class="text-danger">*</span></label>
+                                        <select class="select2">
+                                            <option>Choose</option>
+                                            <option>Phone Calls</option>
+                                            <option>Social Media</option>
+                                            <option>Referral Sites</option>
+                                            <option>Web Analytics</option>
+                                            <option>Previous Purchases</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="col-form-label">Industry <span class="text-danger">*</span></label>
+                                        <select class="select">
+                                            <option>Choose</option>
+                                            <option>Retail Industry</option>
+                                            <option>Banking</option>
+                                            <option>Hotels</option>
+                                            <option>Financial Services</option>
+                                            <option>Insurance</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="col-form-label">Contacts</label>
+                                        <select class="multiple-img" multiple="multiple">
+                                            <option data-image="build/img/profiles/avatar-19.jpg">Darlee Robertson</option>
+                                                    <option data-image="build/img/profiles/avatar-20.jpg" selected>Sharon Roy</option>
+                                                    <option data-image="build/img/profiles/avatar-21.jpg">Vaughan</option>
+                                                    <option data-image="build/img/profiles/avatar-23.jpg">Jessica</option>
+                                                    <option data-image="build/img/profiles/avatar-16.jpg">Carol Thomas</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="col-form-label">Currency <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="col-form-label">Language <span class="text-danger">*</span></label>
+                                        <select class="select">
+                                            <option>Choose</option>
+                                            <option>English</option>
+                                            <option>Arabic</option>
+                                            <option>Chinese</option>
+                                            <option>Hindi</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-0">
+                                        <label class="col-form-label">Description <span class="text-danger">*</span></label>
+                                        <textarea class="form-control" rows="5"></textarea>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+                <!-- /Basic Info -->
 
-                </div>
-                <div class="col-md-12">
-                    <div class="mb-3">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <label class="col-form-label">Company Name</label>
-                            <a href="" class="label-add " data-bs-toggle="offcanvas" data-bs-target="#offcanvas_add_2">
-                                <i class="ti ti-square-rounded-plus"></i>
-                                Add New
-                            </a>
-                        </div>
-                        <select class="select">
-                            <option>Choose</option>
-                            <option>NovaWave LLC</option>
-                            <option>Silver Hawk</option>
-                            <option>Summit Peak</option>
-                            <option>RiverStone Ventur</option>
-                            <option>Insurance</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label class="col-form-label">Value<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label class="col-form-label">Currency <span class="text-danger">*</span></label>
-                        <select class="select">
-                            <option>Select</option>
-                            <option>$</option>
-                            <option>€</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-8">
-                    <div class="mb-3">
-                        <label class="col-form-label">Phone<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control">
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="mb-3">
-                        
-                        <select class="select2">
-                            <option>Choose</option>
-                            <option>Work</option>
-                            <option>Home</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label class="col-form-label">Source <span class="text-danger">*</span></label>
-                        <select class="select">
-                            <option>Choose</option>
-                            <option>Phone calls</option>
-                            <option>Social Media</option>
-                            <option>Referral sites</option>
-                            <option>Web Analytics</option>
-                            <option>Previous Purchase</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label class="col-form-label">Industry <span class="text-danger">*</span></label>
-                        <select class="select">
-                            <option>Choose</option>
-                            <option>Retail Industry</option>
-                            <option>Banking</option>
-                            <option>Hotels</option>
-                            <option>Financial Services</option>
-                            <option>Insurance</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label class="col-form-label">Owner</label>
-                        <select class="select-img">
-                            <option data-image="build/img/profiles/avatar-14.jpg" selected>Jerald</option>
-                            <option data-image="build/img/profiles/avatar-15.jpg">Guillory</option>
-                            <option data-image="build/img/profiles/avatar-16.jpg">Jami</option>
-                            <option data-image="build/img/profiles/avatar-13.jpg">Theresa</option>
-                            <option data-image="build/img/profiles/avatar-24.jpg">Espinosa</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label class="col-form-label">Tags </label>
-                        <input class="input-tags form-control" type="text" data-role="tagsinput"  name="Label" value="Rated" >	
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="mb-3">
-                        <label class="col-form-label">Description <span class="text-danger">*</span></label>
-                        <textarea class="form-control" rows="5"></textarea>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="mb-3">
-                        <label class="col-form-label">Visibility</label>
-                        <div class="d-flex flex-wrap">
-                            <div class="me-2">
-                                <input type="radio" class="status-radio" id="public" name="visible">
-                                <label for="public">Public</label>
-                            </div>
-                            <div class="me-2">
-                                <input type="radio" class="status-radio" id="private" name="visible">
-                                <label for="private">Private</label>
-                            </div>
-                            <div data-bs-toggle="modal" data-bs-target="#access_view">
-                                <input type="radio" class="status-radio" id="people" name="visible">
-                                <label for="people">Select People</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-0">
-                        <label class="col-form-label">Status</label>
-                        <div class="d-flex flex-wrap">
-                            <div class="me-2">
-                                <input type="radio" class="status-radio" id="active" name="status" checked="">
-                                <label for="active">Active</label>
-                            </div>
-                            <div>
-                                <input type="radio" class="status-radio" id="inactive" name="status">
-                                <label for="inactive">Inactive</label>
+                <!-- Address Info -->
+                <div class="accordion-item border-top rounded mb-3">
+                    <div class="accordion-header">
+                        <a href="#" class="accordion-button accordion-custom-button rounded bg-white fw-medium text-dark" data-bs-toggle="collapse" data-bs-target="#address">
+                            <span class="avatar avatar-md rounded text-dark border me-2"><i class="ti ti-map-pin-cog fs-20"></i></span>
+                            Address Info
+                        </a>
+                    </div>							
+                    <div class="accordion-collapse collapse" id="address" data-bs-parent="#main_accordion">
+                        <div class="accordion-body border-top">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="col-form-label">Street Address </label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="col-form-label">City </label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="col-form-label">State / Province </label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3 mb-md-0">
+                                        <label class="col-form-label">Country</label>
+                                        <select class="select">
+                                            <option>Choose</option>
+                                            <option>India</option>
+                                            <option>USA</option>
+                                            <option>France</option>
+                                            <option>UK</option>
+                                            <option>UAE</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-0">
+                                        <label class="col-form-label">Zipcode </label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- /Address Info -->
+
+                <!-- Social Profile -->
+                <div class="accordion-item border-top rounded mb-3">
+                    <div class="accordion-header">
+                        <a href="#" class="accordion-button accordion-custom-button rounded bg-white fw-medium text-dark" data-bs-toggle="collapse" data-bs-target="#social">
+                            <span class="avatar avatar-md rounded text-dark border me-2"><i class="ti ti-social fs-20"></i></span>
+                            Social Profile
+                        </a>
+                    </div>							
+                    <div class="accordion-collapse collapse" id="social" data-bs-parent="#main_accordion">
+                        <div class="accordion-body border-top">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="col-form-label">Facebook</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="col-form-label">Skype </label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="col-form-label">Linkedin </label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="col-form-label">Twitter</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3 mb-md-0">
+                                        <label class="col-form-label">Whatsapp</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-0">
+                                        <label class="col-form-label">Instagram</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Social Profile -->
+
+                <!-- Access -->
+                <div class="accordion-item border-top rounded mb-3">
+                    <div class="accordion-header">
+                        <a href="#" class="accordion-button accordion-custom-button rounded bg-white fw-medium text-dark" data-bs-toggle="collapse" data-bs-target="#access-info">
+                            <span class="avatar avatar-md rounded text-dark border me-2"><i class="ti ti-accessible fs-20"></i></span>
+                            Access
+                        </a>
+                    </div>							
+                    <div class="accordion-collapse collapse" id="access-info" data-bs-parent="#main_accordion">
+                        <div class="accordion-body border-top">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="col-form-label">Visibility</label>
+                                        <div class="d-flex flex-wrap">
+                                            <div class="me-2">
+                                                <input type="radio" class="status-radio" id="public" name="visible">
+                                                <label for="public">Public</label>
+                                            </div>
+                                            <div class="me-2">
+                                                <input type="radio" class="status-radio" id="private" name="visible">
+                                                <label for="private">Private</label>
+                                            </div>
+                                            <div data-bs-toggle="modal" data-bs-target="#access_view">
+                                                <input type="radio" class="status-radio" id="people" name="visible">
+                                                <label for="people">Select People</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-0">
+                                        <label class="col-form-label">Status</label>
+                                        <div class="d-flex flex-wrap">
+                                            <div class="me-2">
+                                                <input type="radio" class="status-radio" id="active" name="status" checked="">
+                                                <label for="active">Active</label>
+                                            </div>
+                                            <div>
+                                                <input type="radio" class="status-radio" id="inactive" name="status">
+                                                <label for="inactive">Inactive</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Access -->
             </div>
             <div class="d-flex align-items-center justify-content-end">
                 <button type="button" data-bs-dismiss="offcanvas" class="btn btn-light me-2">Cancel</button>
-                <button type="button" class="btn btn-primary" >Save Changes</button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create_success_2">Create</button>
             </div>
         </form>
     </div>
-    
 </div>
 <!-- /Edit Lead -->
 
@@ -24587,186 +24830,7 @@
 @endif
 
 @if(Route::is(['leads']))
-<!-- Add Lead -->
-<div class="offcanvas offcanvas-end offcanvas-large" tabindex="-1" id="offcanvas_add">
-    <div class="offcanvas-header border-bottom">
-        <h5 class="fw-semibold">Add New Lead</h5>
-        <button type="button" class="btn-close custom-btn-close border p-1 me-0 d-flex align-items-center justify-content-center rounded-circle" data-bs-dismiss="offcanvas" aria-label="Close">
-            <i class="ti ti-x"></i>
-        </button>
-    </div>
-    <div class="offcanvas-body">
-        <form action="{{url('contacts')}}">	
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="mb-3">
-                        <label class="col-form-label">Lead Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control">
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="mb-3">
-                        <div class="radio-wrap">
-                            <label class="col-form-label">Lead Type</label>
-                            <div class="d-flex flex-wrap">
-                                <div class="me-2">
-                                    <input type="radio" class="status-radio" id="person" name="leave" checked>
-                                    <label for="person">Person</label>
-                                </div>
-                                <div>
-                                    <input type="radio" class="status-radio" id="Organization" name="leave">
-                                    <label for="Organization">Organization</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-md-12">
-                    <div class="mb-3">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <label class="col-form-label">Company Name</label>
-                            <a href="" class="label-add " data-bs-toggle="offcanvas" data-bs-target="#offcanvas_add_2">
-                                <i class="ti ti-square-rounded-plus"></i>
-                                Add New
-                            </a>
-                        </div>
-                        <select class="select">
-                            <option>Choose</option>
-                            <option>NovaWave LLC</option>
-                            <option>Silver Hawk</option>
-                            <option>Summit Peak</option>
-                            <option>RiverStone Ventur</option>
-                            <option>Insurance</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label class="col-form-label">Value<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label class="col-form-label">Currency <span class="text-danger">*</span></label>
-                        <select class="select">
-                            <option>Select</option>
-                            <option>$</option>
-                            <option>€</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-8">
-                    <div class="mb-3">
-                        <label class="col-form-label">Phone<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control">
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="mb-3">
-                        
-                        <select class="select2">
-                            <option>Choose</option>
-                            <option>Work</option>
-                            <option>Home</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label class="col-form-label">Source <span class="text-danger">*</span></label>
-                        <select class="select">
-                            <option>Choose</option>
-                            <option>Phone calls</option>
-                            <option>Social Media</option>
-                            <option>Referral sites</option>
-                            <option>Web Analytics</option>
-                            <option>Previous Purchase</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label class="col-form-label">Industry <span class="text-danger">*</span></label>
-                        <select class="select">
-                            <option>Choose</option>
-                            <option>Retail Industry</option>
-                            <option>Banking</option>
-                            <option>Hotels</option>
-                            <option>Financial Services</option>
-                            <option>Insurance</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label class="col-form-label">Owner</label>
-                        <select class="select-img">
-                            <option data-image="build/img/profiles/avatar-14.jpg" selected>Jerald</option>
-                            <option data-image="build/img/profiles/avatar-15.jpg">Guillory</option>
-                            <option data-image="build/img/profiles/avatar-16.jpg">Jami</option>
-                            <option data-image="build/img/profiles/avatar-13.jpg">Theresa</option>
-                            <option data-image="build/img/profiles/avatar-24.jpg">Espinosa</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label class="col-form-label">Tags </label>
-                        <input class="input-tags form-control" type="text" data-role="tagsinput"  name="Label" value="Rated" >	
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="mb-3">
-                        <label class="col-form-label">Description <span class="text-danger">*</span></label>
-                        <textarea class="form-control" rows="5"></textarea>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="mb-3">
-                        <label class="col-form-label">Visibility</label>
-                        <div class="d-flex flex-wrap">
-                            <div class="me-2">
-                                <input type="radio" class="status-radio" id="public" name="visible">
-                                <label for="public">Public</label>
-                            </div>
-                            <div class="me-2">
-                                <input type="radio" class="status-radio" id="private" name="visible">
-                                <label for="private">Private</label>
-                            </div>
-                            <div data-bs-toggle="modal" data-bs-target="#access_view">
-                                <input type="radio" class="status-radio" id="people" name="visible">
-                                <label for="people">Select People</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-0">
-                        <label class="col-form-label">Status</label>
-                        <div class="d-flex flex-wrap">
-                            <div class="me-2">
-                                <input type="radio" class="status-radio" id="active" name="status" checked="">
-                                <label for="active">Active</label>
-                            </div>
-                            <div>
-                                <input type="radio" class="status-radio" id="inactive" name="status">
-                                <label for="inactive">Inactive</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="d-flex align-items-center justify-content-end">
-                <button type="button" data-bs-dismiss="offcanvas" class="btn btn-light me-2">Cancel</button>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create_success">Create</button>
-            </div>
-        </form>
-    </div>	
-</div>
-<!-- /Add Lead -->
-
-<!-- Add Company -->
-<div class="offcanvas offcanvas-end offcanvas-large" tabindex="-1" id="offcanvas_add_2">
+<div class="offcanvas offcanvas-end offcanvas-large" tabindex="-1" id="offcanvas_add_company">
     <div class="offcanvas-header border-bottom">
         <h5 class="fw-semibold">Add New Company</h5>
         <button type="button" class="btn-close custom-btn-close border p-1 me-0 d-flex align-items-center justify-content-center rounded-circle" data-bs-dismiss="offcanvas" aria-label="Close">
@@ -24774,7 +24838,13 @@
         </button>
     </div>
     <div class="offcanvas-body">
-        <form action="{{url('companies')}}">	
+        <style>
+            .danger{
+                color: red
+            }
+        </style>
+        <form id="createCompanyForm" action="{{ route('companies.store') }}" method="POST" enctype="multipart/form-data">
+           @csrf
             <div class="accordion" id="main_accordion">
                 <!-- Basic Info -->
                 <div class="accordion-item rounded mb-3">
@@ -24792,15 +24862,15 @@
                                         <div class="profile-upload">
                                             <div class="profile-upload-img">
                                                 <span><i class="ti ti-photo"></i></span>
-                                                <img src="{{URL::asset('/build/img/profiles/avatar-20.jpg')}}" alt="img" class="preview1">
-                                                <button type="button" class="profile-remove">
+                                                <img id="imagePreview"src="{{URL::asset('/build/img/profiles/avatar-20.jpg')}}" alt="img" class="preview1">
+                                                <button id="removeImage" type="button" class="profile-remove">
                                                     <i class="ti ti-x"></i>
                                                 </button>
                                             </div>
                                             <div class="profile-upload-content">
                                                 <label class="profile-upload-btn">
                                                     <i class="ti ti-file-broken"></i> Upload File 
-                                                    <input type="file" class="input-img">
+                                                    <input name="company_logo" type="file" class="input-img">
                                                 </label>
                                                 <p>JPG, GIF or PNG. Max size of 800K</p>
                                             </div>
@@ -24809,93 +24879,61 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="mb-3">
-                                        <label class="col-form-label">Company Name</label>
-                                        <input type="text" class="form-control">
+                                        <label class="col-form-label">Company Name <span class="danger">*</label>
+                                        <input  name="company_name" type="text" class="form-control">
+                                            @if ($errors->has('company_name'))
+                                                <div class="text-danger">{{ $errors->first('company_name') }}</div>
+                                            @endif
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <label class="col-form-label">Email <span class="text-danger">*</span></label>
-                                            <div class="status-toggle small-toggle-btn d-flex align-items-center">
-                                                <span class="me-2 label-text">Email Opt Out</span>
-                                                <input type="checkbox" id="user" class="check" checked="">
-                                                <label for="user" class="checktoggle"></label>
-                                            </div>
+                                            <label class="col-form-label">Email <span class="danger">*</span></label>
                                         </div>
-                                        <input type="text" class="form-control">
+                                        <input  name="email" type="text" class="form-control">
+                                        @if ($errors->has('email'))
+                                            <div class="text-danger">{{ $errors->first('email') }}</div>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label class="col-form-label">Phone 1 <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control">
+                                        <label class="col-form-label">Phone 1 <span class="danger">*</span></label>
+                                        <input  name="phone1" type="text" class="form-control">
+                                        @if ($errors->has('phone1'))
+                                            <div class="text-danger">{{ $errors->first('phone1') }}</div>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="col-form-label">Phone 2</label>
-                                        <input type="text" class="form-control">
+                                        <input  name="phone2" type="text" class="form-control">
                                     </div>
                                 </div>
+                               
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label class="col-form-label">Fax <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control">
+                                        <label class="col-form-label">Website <span class="danger">*</span></label>
+                                        <input  name="website" type="text" class="form-control">
+                                        @if ($errors->has('website'))
+                                            <div class="text-danger">{{ $errors->first('website') }}</div>
+                                        @endif
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="col-form-label">Website <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="col-form-label">Ratings</label>
-                                        <div class="icon-form-end">
-                                            <span class="form-icon"><i class="ti ti-star"></i></span>
-                                            <input type="text" class="form-control" placeholder="4.2">
-                                        </div>
-                                    </div>
-                                </div>
+                               
                                 <div class="col-md-6">
                                     <div class="fmb-3">
-                                        <label class="col-form-label">Owner</label>
-                                        <select class="select-img">
-                                            <option data-image="build/img/profiles/avatar-14.jpg" selected>Jerald</option>
-                                            <option data-image="build/img/profiles/avatar-15.jpg">Guillory</option>
-                                            <option data-image="build/img/profiles/avatar-16.jpg">Jami</option>
-                                            <option data-image="build/img/profiles/avatar-13.jpg">Theresa</option>
-                                            <option data-image="build/img/profiles/avatar-24.jpg">Espinosa</option>
-                                        </select>
+                                    <label class="col-form-label">Owner</label>
+                                    <input  name="owner" type="text" class="form-control">
                                     </div>
                                 </div>
+                               
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label class="col-form-label">Tags </label>
-                                        <input class="input-tags form-control" type="text" data-role="tagsinput"  name="Label" value="Collab" >	
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <label class="col-form-label">Deals</label>
-                                        </div>
-                                        <select class="select2">
-                                            <option>Choose</option>
-                                            <option>Collins</option>
-                                            <option>Konopelski</option>
-                                            <option>Adams</option>
-                                            <option>Schumm</option>
-                                            <option>Wisozk</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="col-form-label">Source <span class="text-danger">*</span></label>
-                                        <select class="select2">
+                                        <label class="col-form-label">Source <span class="danger">*</span></label>
+                                        <select name="source" class="select2">
                                             <option>Choose</option>
                                             <option>Phone Calls</option>
                                             <option>Social Media</option>
@@ -24903,12 +24941,16 @@
                                             <option>Web Analytics</option>
                                             <option>Previous Purchases</option>
                                         </select>
+                                        @if ($errors->has('source'))
+                                            <div class="text-danger">{{ $errors->first('source') }}</div>
+                                        @endif
                                     </div>
                                 </div>
+
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label class="col-form-label">Industry <span class="text-danger">*</span></label>
-                                        <select class="select">
+                                        <label class="col-form-label">Industry <span class="danger">*</span></label>
+                                        <select name="industry" class="select">
                                             <option>Choose</option>
                                             <option>Retail Industry</option>
                                             <option>Banking</option>
@@ -24916,44 +24958,15 @@
                                             <option>Financial Services</option>
                                             <option>Insurance</option>
                                         </select>
+                                        @if ($errors->has('industry'))
+                                            <div class="text-danger">{{ $errors->first('industry') }}</div>
+                                        @endif
                                     </div>
                                 </div>
-                                <div class="col-md-12">
-                                    <div class="mb-3">
-                                        <label class="col-form-label">Contacts</label>
-                                        <select class="multiple-img" multiple="multiple">
-                                            <option data-image="build/img/profiles/avatar-19.jpg">Darlee Robertson</option>
-                                                    <option data-image="build/img/profiles/avatar-20.jpg" selected>Sharon Roy</option>
-                                                    <option data-image="build/img/profiles/avatar-21.jpg">Vaughan</option>
-                                                    <option data-image="build/img/profiles/avatar-23.jpg">Jessica</option>
-                                                    <option data-image="build/img/profiles/avatar-16.jpg">Carol Thomas</option>
-                                        </select>
+
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="col-form-label">Currency <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="col-form-label">Language <span class="text-danger">*</span></label>
-                                        <select class="select">
-                                            <option>Choose</option>
-                                            <option>English</option>
-                                            <option>Arabic</option>
-                                            <option>Chinese</option>
-                                            <option>Hindi</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="mb-0">
-                                        <label class="col-form-label">Description <span class="text-danger">*</span></label>
-                                        <textarea class="form-control" rows="5"></textarea>
-                                    </div>
-                                </div>
+                            
+                                
                             </div>
                         </div>
                     </div>
@@ -24974,25 +24987,25 @@
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <label class="col-form-label">Street Address </label>
-                                        <input type="text" class="form-control">
+                                        <input  name="street_address" type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="col-form-label">City </label>
-                                        <input type="text" class="form-control">
+                                        <input  name="city" type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="col-form-label">State / Province </label>
-                                        <input type="text" class="form-control">
+                                        <input name="state_province"  type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3 mb-md-0">
                                         <label class="col-form-label">Country</label>
-                                        <select class="select">
+                                        <select name="country"  class="select">
                                             <option>Choose</option>
                                             <option>India</option>
                                             <option>USA</option>
@@ -25005,7 +25018,7 @@
                                 <div class="col-md-6">
                                     <div class="mb-0">
                                         <label class="col-form-label">Zipcode </label>
-                                        <input type="text" class="form-control">
+                                        <input  name="zipcode" type="text" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -25028,37 +25041,37 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="col-form-label">Facebook</label>
-                                        <input type="text" class="form-control">
+                                        <input  name="facebook" type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="col-form-label">Skype </label>
-                                        <input type="text" class="form-control">
+                                        <input  name="skype" type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="col-form-label">Linkedin </label>
-                                        <input type="text" class="form-control">
+                                        <input  name="linkedin" type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="col-form-label">Twitter</label>
-                                        <input type="text" class="form-control">
+                                        <input  name="twitter" type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3 mb-md-0">
                                         <label class="col-form-label">Whatsapp</label>
-                                        <input type="text" class="form-control">
+                                        <input name="whatsapp" type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-0">
                                         <label class="col-form-label">Instagram</label>
-                                        <input type="text" class="form-control">
+                                        <input  name="instagram" type="text" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -25067,79 +25080,127 @@
                 </div>
                 <!-- /Social Profile -->
 
-                <!-- Access -->
-                <div class="accordion-item border-top rounded mb-3">
-                    <div class="accordion-header">
-                        <a href="#" class="accordion-button accordion-custom-button rounded bg-white fw-medium text-dark" data-bs-toggle="collapse" data-bs-target="#access-info">
-                            <span class="avatar avatar-md rounded text-dark border me-2"><i class="ti ti-accessible fs-20"></i></span>
-                            Access
-                        </a>
-                    </div>							
-                    <div class="accordion-collapse collapse" id="access-info" data-bs-parent="#main_accordion">
-                        <div class="accordion-body border-top">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="mb-3">
-                                        <label class="col-form-label">Visibility</label>
-                                        <div class="d-flex flex-wrap">
-                                            <div class="me-2">
-                                                <input type="radio" class="status-radio" id="public" name="visible">
-                                                <label for="public">Public</label>
-                                            </div>
-                                            <div class="me-2">
-                                                <input type="radio" class="status-radio" id="private" name="visible">
-                                                <label for="private">Private</label>
-                                            </div>
-                                            <div data-bs-toggle="modal" data-bs-target="#access_view">
-                                                <input type="radio" class="status-radio" id="people" name="visible">
-                                                <label for="people">Select People</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-0">
-                                        <label class="col-form-label">Status</label>
-                                        <div class="d-flex flex-wrap">
-                                            <div class="me-2">
-                                                <input type="radio" class="status-radio" id="active" name="status" checked="">
-                                                <label for="active">Active</label>
-                                            </div>
-                                            <div>
-                                                <input type="radio" class="status-radio" id="inactive" name="status">
-                                                <label for="inactive">Inactive</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /Access -->
+             
             </div>
-            <div class="d-flex align-items-center justify-content-end">
+            <div class="d-flex align-items-center justify-content-center mb-2">
                 <button type="button" data-bs-dismiss="offcanvas" class="btn btn-light me-2">Cancel</button>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create_success_2">Create</button>
+                <button type="submit" class="btn btn-primary">Create</button>
             </div>
         </form>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <script>
+            $(document).ready(function() {
+                // Handle image preview on file input change
+                $('#companyLogoInput').change(function(event) {
+                    const file = event.target.files[0];
+
+                    if (file) {
+                        const reader = new FileReader();
+
+                        reader.onload = function(e) {
+                            $('#imagePreview').attr('src', e.target.result).show();
+                            $('#removeImage').show();  // Show the remove button
+                        };
+
+                        reader.readAsDataURL(file);
+                    }
+                });
+
+                // Remove the image preview
+                $('#removeImage').click(function() {
+                    $('#companyLogoInput').val('');  // Clear the file input
+                    $('#imagePreview').hide();  // Hide the preview
+                    $(this).hide();  // Hide the remove button
+                });
+
+                // Intercept form submission
+                $('#createCompanyForm').submit(function(e) {
+                    e.preventDefault();  // Prevent the default form submission
+
+                    let form = $(this);
+                    let formData = new FormData(this);  // Get all form data
+
+                    $.ajax({
+                        url: form.attr('action'),  // Use the form action for URL
+                        type: form.attr('method'),  // Use form method (POST or PUT)
+                        data: formData,
+                        processData: false,  // Don't process the data
+                        contentType: false,  // Don't set content-type header
+                        success: function(response) {
+                            if (response.status === 'success') {
+                                // Show success alert using SweetAlert
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Company Created!',
+                                    text: response.message,  // Success message from the controller
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        // Close the popup (offcanvas or modal)
+                                        $('#offcanvas_add').offcanvas('hide');  // Close the offcanvas (replace with your modal close logic if needed)
+
+                                        // Reset the form after success
+                                        form[0].reset();  // Reset the form fields
+
+                                        // Reset the image preview
+                                        $('#imagePreview').hide();  // Hide the preview image
+                                        $('#removeImage').hide();  // Hide the remove button
+
+                                        // Clear validation error messages
+                                        $('.text-danger').empty();
+                                    }
+                                });
+                            } else {
+                                // Handle server-side errors (if status is not 'success')
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: 'Something went wrong, please try again later.',
+                                });
+                            }
+                        },
+                        error: function(xhr) {
+                            // Handle validation errors (response from server)
+                            let errors = xhr.responseJSON.errors;
+                            $('.text-danger').empty();  // Clear existing error messages
+
+                            // Loop through each field error and display the message
+                            for (let field in errors) {
+                                // Find the respective error message div for each field
+                                let errorDiv = $(`[name=${field}]`).next('.text-danger');
+                                if (errorDiv.length === 0) {
+                                    // If no error message div is found, create one
+                                    errorDiv = $(`[name=${field}]`).after('<div class="text-danger"></div>').next('.text-danger');
+                                }
+                                errorDiv.text(errors[field][0]);  // Add the error message to the field
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
+
+
+
     </div>
 </div>
-<!-- /Add Company -->
-
-<!-- Edit Lead -->
-<div class="offcanvas offcanvas-end offcanvas-large" tabindex="-1" id="offcanvas_edit">
+<!-- Add Lead -->
+<div class="offcanvas offcanvas-end offcanvas-large" tabindex="-1" id="offcanvas_add">
     <div class="offcanvas-header border-bottom">
-        <h5 class="fw-semibold">Add New Lead</h5>
+        <h5 class="fw-semibold">Add New Lead </h5>
         <button type="button" class="btn-close custom-btn-close border p-1 me-0 d-flex align-items-center justify-content-center rounded-circle" data-bs-dismiss="offcanvas" aria-label="Close">
             <i class="ti ti-x"></i>
         </button>
     </div>
     <div class="offcanvas-body">
-        <form action="{{url('contacts')}}">	
+            <form id="createLeadForm" action="{{ route('leads.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
             <div class="row">
                 <div class="col-md-12">
                     <div class="mb-3">
-                        <label class="col-form-label">Lead Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" value="Collins">
+                        <label class="col-form-label">Lead Name <span class="danger">*</span></label>
+                        <input name="lead_name" type="text" class="form-control">
                     </div>
                 </div>
                 <div class="col-md-12">
@@ -25148,73 +25209,63 @@
                             <label class="col-form-label">Lead Type</label>
                             <div class="d-flex flex-wrap">
                                 <div class="me-2">
-                                    <input type="radio" class="status-radio" id="person" name="leave" checked>
+                                    <input type="radio" class="status-radio" id="person" name="lead_type" value="Person" checked>
                                     <label for="person">Person</label>
                                 </div>
                                 <div>
-                                    <input type="radio" class="status-radio" id="Organization" name="leave">
-                                    <label for="Organization">Organization</label>
+                                    <input type="radio" class="status-radio" id="organization" name="lead_type" value="Organization">
+                                    <label for="organization">Organization</label>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
 
                 </div>
+               
                 <div class="col-md-12">
                     <div class="mb-3">
                         <div class="d-flex justify-content-between align-items-center">
                             <label class="col-form-label">Company Name</label>
-                            <a href="" class="label-add " data-bs-toggle="offcanvas" data-bs-target="#offcanvas_add_2">
+                            <a href="" class="label-add " data-bs-toggle="offcanvas" data-bs-target="#offcanvas_add_company">
                                 <i class="ti ti-square-rounded-plus"></i>
                                 Add New
                             </a>
                         </div>
-                        <select class="select">
+                        <select name="client_id" class="select" name="company_name">
+                        @php
+                            $allClients = \App\Models\ClientCompany::orderBy('created_at', 'desc')->get();
+                        @endphp
                             <option>Choose</option>
-                            <option>NovaWave LLC</option>
-                            <option>Silver Hawk</option>
-                            <option>Summit Peak</option>
-                            <option>RiverStone Ventur</option>
-                            <option>Insurance</option>
+                            @if($allClients->isEmpty())
+                                <p>No clients available</p>
+                            @else
+                                @foreach($allClients as $client)
+                                    <option value="{{ $client->id }}">{{ $client->company_name }}</option>
+                                @endforeach
+                            @endif
                         </select>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="mb-3">
-                        <label class="col-form-label">Value<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control">
+                        <label class="col-form-label">Email<span class="danger">*</span></label>
+                        <input name="email" type="text" class="form-control">
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label class="col-form-label">Currency <span class="text-danger">*</span></label>
-                        <select class="select">
-                            <option>Select</option>
-                            <option>$</option>
-                            <option>€</option>
-                        </select>
-                    </div>
-                </div>
+                
                 <div class="col-md-8">
                     <div class="mb-3">
-                        <label class="col-form-label">Phone<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control">
+                        <label class="col-form-label">Phone<span class="danger">*</span></label>
+                        <input name="phone" type="text" class="form-control">
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="mb-3">
-                        
-                        <select class="select2">
-                            <option>Choose</option>
-                            <option>Work</option>
-                            <option>Home</option>
-                        </select>
-                    </div>
-                </div>
+               
+                <div class="row">
                 <div class="col-md-6">
                     <div class="mb-3">
-                        <label class="col-form-label">Source <span class="text-danger">*</span></label>
-                        <select class="select">
+                        <label class="col-form-label">Source <span class="danger">*</span></label>
+                        <select name="source" class="select">
                             <option>Choose</option>
                             <option>Phone calls</option>
                             <option>Social Media</option>
@@ -25226,8 +25277,8 @@
                 </div>
                 <div class="col-md-6">
                     <div class="mb-3">
-                        <label class="col-form-label">Industry <span class="text-danger">*</span></label>
-                        <select class="select">
+                        <label class="col-form-label">Industry <span class="danger">*</span></label>
+                        <select name="industry" class="select">
                             <option>Choose</option>
                             <option>Retail Industry</option>
                             <option>Banking</option>
@@ -25237,75 +25288,336 @@
                         </select>
                     </div>
                 </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="mb-3">
+                        <label class="col-form-label">Address</span></label>
+                        <input name="address" type="text" class="form-control">
+                    </div>
+                </div>
+                
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label class="col-form-label">Owner</label>
-                        <select class="select-img">
-                            <option data-image="build/img/profiles/avatar-14.jpg" selected>Jerald</option>
-                            <option data-image="build/img/profiles/avatar-15.jpg">Guillory</option>
-                            <option data-image="build/img/profiles/avatar-16.jpg">Jami</option>
-                            <option data-image="build/img/profiles/avatar-13.jpg">Theresa</option>
-                            <option data-image="build/img/profiles/avatar-24.jpg">Espinosa</option>
+                        <input name="owner" type="text" class="form-control">
+                    </div>
+                </div>
+              
+            </div>
+            <div class="d-flex align-items-center justify-content-center mb-2">
+                <button type="button" data-bs-dismiss="offcanvas" class="btn btn-light me-2">Cancel</button>
+                <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+        </form>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <script>
+            $(document).ready(function() {
+            
+                // Intercept form submission
+                $('#createLeadForm').submit(function(e) {
+                    e.preventDefault();  // Prevent the default form submission
+
+                    let form = $(this);
+                    let formData = new FormData(this);  // Get all form data
+
+                    $.ajax({
+                        url: form.attr('action'),  // Use the form action for URL
+                        type: form.attr('method'),  // Use form method (POST or PUT)
+                        data: formData,
+                        processData: false,  // Don't process the data
+                        contentType: false,  // Don't set content-type header
+                        success: function(response) {
+                            if (response.status === 'success') {
+                                // Show success alert using SweetAlert
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Lead Created!',
+                                    text: response.message,  // Success message from the controller
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        // Close the popup (offcanvas or modal)
+                                        $('#offcanvas_add').offcanvas('hide');  // Close the offcanvas (replace with your modal close logic if needed)
+
+                                        // Reset the form after success
+                                        form[0].reset();  // Reset the form fields
+
+                                        // Clear validation error messages
+                                        $('.text-danger').empty();
+                                        location.reload();
+                                    }
+                                });
+                            } else {
+                                // Handle server-side errors (if status is not 'success')
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: 'Something went wrong, please try again later.',
+                                });
+                            }
+                        },
+                        error: function(xhr) {
+                            // Handle validation errors (response from server)
+                            let errors = xhr.responseJSON.errors;
+                            $('.text-danger').empty();  // Clear existing error messages
+
+                            // Loop through each field error and display the message
+                            for (let field in errors) {
+                                // Find the respective error message div for each field
+                                let errorDiv = $(`[name=${field}]`).next('.text-danger');
+                                if (errorDiv.length === 0) {
+                                    // If no error message div is found, create one
+                                    errorDiv = $(`[name=${field}]`).after('<div class="text-danger"></div>').next('.text-danger');
+                                }
+                                errorDiv.text(errors[field][0]);  // Add the error message to the field
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
+    </div>	
+</div>
+<!-- /Add Lead -->
+
+<!-- Edit Lead -->
+<div class="offcanvas offcanvas-end offcanvas-large" tabindex="-1" id="offcanvas_edit_lead">
+<div class="offcanvas-header border-bottom">
+        <h5 class="fw-semibold">Edit Lead </h5>
+        <button type="button" class="btn-close custom-btn-close border p-1 me-0 d-flex align-items-center justify-content-center rounded-circle" data-bs-dismiss="offcanvas" aria-label="Close">
+            <i class="ti ti-x"></i>
+        </button>
+    </div>
+    <div class="offcanvas-body">
+        <form id="editLeadForm" action="{{ route('lead.edit') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <input type="hidden" name="lead_id" id="lead_id">
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="mb-3">
+                    <label class="col-form-label">Lead Name <span class="danger">*</span></label>
+                    <input name="lead_name" id="lead_name" type="text" class="form-control">
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="mb-3">
+                    <div class="radio-wrap">
+                        <label class="col-form-label">Lead Type</label>
+                        <div class="d-flex flex-wrap">
+                            <div class="me-2">
+                                <input type="radio" class="status-radio" id="person" name="lead_type" value="Person">
+                                <label for="person">Person</label>
+                            </div>
+                            <div>
+                                <input type="radio" class="status-radio" id="organization" name="lead_type" value="Organization">
+                                <label for="organization">Organization</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="mb-3">
+                    <label class="col-form-label">Company Name</label>
+                    <a href="" class="label-add " data-bs-toggle="offcanvas" data-bs-target="#offcanvas_add_company">
+                                <i class="ti ti-square-rounded-plus"></i>
+                                Add New
+                            </a>
+                    <select name="client_id" class="select" id="company_name">
+                        <option>Choose</option>
+                        @php
+                            $allClients = \App\Models\ClientCompany::orderBy('created_at', 'desc')->get();
+                        @endphp
+                        @foreach($allClients as $client)
+                            <option value="{{ $client->id }}">{{ $client->company_name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="mb-3">
+                    <label class="col-form-label">Email <span class="danger">*</span></label>
+                    <input name="email" id="email" type="text" class="form-control">
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="mb-3">
+                    <label class="col-form-label">Phone <span class="danger">*</span></label>
+                    <input name="phone" id="phone" type="text" class="form-control">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="col-form-label">Source <span class="danger">*</span></label>
+                        <select name="source" class="select" id="source">
+                            <option>Choose</option>
+                            <option>Phone calls</option>
+                            <option>Social Media</option>
+                            <option>Referral sites</option>
+                            <option>Web Analytics</option>
+                            <option>Previous Purchase</option>
                         </select>
                     </div>
                 </div>
+
                 <div class="col-md-6">
                     <div class="mb-3">
-                        <label class="col-form-label">Tags </label>
-                        <input class="input-tags form-control" type="text" data-role="tagsinput"  name="Label" value="Rated" >	
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="mb-3">
-                        <label class="col-form-label">Description <span class="text-danger">*</span></label>
-                        <textarea class="form-control" rows="5"></textarea>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="mb-3">
-                        <label class="col-form-label">Visibility</label>
-                        <div class="d-flex flex-wrap">
-                            <div class="me-2">
-                                <input type="radio" class="status-radio" id="public" name="visible">
-                                <label for="public">Public</label>
-                            </div>
-                            <div class="me-2">
-                                <input type="radio" class="status-radio" id="private" name="visible">
-                                <label for="private">Private</label>
-                            </div>
-                            <div data-bs-toggle="modal" data-bs-target="#access_view">
-                                <input type="radio" class="status-radio" id="people" name="visible">
-                                <label for="people">Select People</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-0">
-                        <label class="col-form-label">Status</label>
-                        <div class="d-flex flex-wrap">
-                            <div class="me-2">
-                                <input type="radio" class="status-radio" id="active" name="status" checked="">
-                                <label for="active">Active</label>
-                            </div>
-                            <div>
-                                <input type="radio" class="status-radio" id="inactive" name="status">
-                                <label for="inactive">Inactive</label>
-                            </div>
-                        </div>
+                        <label class="col-form-label">Industry <span class="danger">*</span></label>
+                        <select name="industry" class="select" id="industry">
+                            <option>Choose</option>
+                            <option>Retail Industry</option>
+                            <option>Banking</option>
+                            <option>Hotels</option>
+                            <option>Financial Services</option>
+                            <option>Insurance</option>
+                        </select>
                     </div>
                 </div>
             </div>
-            <div class="d-flex align-items-center justify-content-end">
-                <button type="button" data-bs-dismiss="offcanvas" class="btn btn-light me-2">Cancel</button>
-                <button type="button" class="btn btn-primary" >Save Changes</button>
+
+            <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="col-form-label">Address</label>
+                    <input name="address" id="address" type="text" class="form-control">
+                </div>
             </div>
+
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="col-form-label">Owner</label>
+                    <input name="owner" id="owner" type="text" class="form-control">
+                </div>
+            </div>
+            </div>
+
+            
+        </div>
+
+        <div class="d-flex align-items-center justify-content-center mb-2">
+            <button type="button" data-bs-dismiss="offcanvas" class="btn btn-light me-2">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
         </form>
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <script>
+        $(document).ready(function () {
+            // Trigger when offcanvas is shown
+            $('#offcanvas_edit_lead').on('shown.bs.offcanvas', function (e) {
+                var button = $(e.relatedTarget); // The button that triggered the offcanvas
+                var leadId = button.data('lead-id');
+                var leadName = button.data('lead-name');
+                var leadType = button.data('lead-type');
+                var companyName = button.data('company-name');
+                var email = button.data('email');
+                var phone = button.data('phone');
+                var source = button.data('source');
+                var industry = button.data('industry');
+                var address = button.data('address');
+                var owner = button.data('owner');
+                var modal = $(this);
+                modal.find('#address').val(address); // Set the address
+                modal.find('#owner').val(owner); // Set the owner
+                // Populate the form fields with data
+                $('#lead_id').val(leadId);
+                $('#lead_name').val(leadName);
+                $("input[name='lead_type'][value='" + leadType + "']").prop('checked', true); // Radio button for lead type
+                $('#email').val(email);
+                $('#phone').val(phone);
+                console.log('address: ',address,'owner: ',owner)
+
+                if (companyName) {
+                    // You should match the companyName with the company name value from the options
+                    $('#company_name option').each(function() {
+                        if ($(this).text() === companyName) {
+                            $(this).prop('selected', true);
+                        }
+                    });
+                if (source) {
+                    $('#source').val(source);  // Directly select the value
+                }
+
+                // Set the selected value for industry dropdown
+                if (industry) {
+                    $('#industry').val(industry);  // Directly select the value
+                }
+                            }
+               
+            });
+
+            // Handle form submission
+            $('#editLeadForm').submit(function (e) {
+                e.preventDefault();  // Prevent default form submission
+
+                var formData = $(this).serialize();  // Serialize form data
+
+                $.ajax({
+                    url: '{{ route('lead.edit') }}',  // Ensure this is the correct URL from your route
+                    method: 'POST',
+                    data: formData,
+                    success: function (response) {
+                        if (response) {
+                            $('#offcanvas_edit_lead').offcanvas('hide');  // Close the offcanvas
+                            Swal.fire(
+                            'Updated!',
+                            'Lead updated successfully!',
+                            'success'
+                            ).then(() => {
+                                location.reload(); // Reload the page after deletion success
+                            });
+                            // Optionally, reload the page or update the UI with new lead details
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error!',
+                                text: response.message || 'An error occurred while updating the lead.',
+                            });
+                        }
+                    },
+                    error: function (xhr) {
+                        var errors = xhr.responseJSON.errors;
+                        if (errors) {
+                            var errorMessage = '';
+                            for (var key in errors) {
+                                errorMessage += errors[key][0] + "\n";
+                            }
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Validation Error!',
+                                text: errorMessage,
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'An error occurred!',
+                                text: 'Please try again.',
+                            });
+                        }
+                    }
+                });
+            });
+        });
+       
+       </script>
     </div>
     
 </div>
 <!-- /Edit Lead -->
 
-<!-- Delete Lead -->
-<div class="modal fade" id="delete_lead" role="dialog">
+<!-- Delete Lead Modal -->
+<div class="modal fade" id="delete_lead" tabindex="-1" role="dialog" aria-labelledby="delete_leadLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
@@ -25314,10 +25626,70 @@
                         <i class="ti ti-trash-x fs-36 text-danger"></i>
                     </div>
                     <h4 class="mb-2">Remove Lead?</h4>
-                    <p class="mb-0">Are you sure you want to remove <br> lead you selected.</p>
+                    <p class="mb-0">Are you sure you want to remove <br> the lead you selected?</p>
                     <div class="d-flex align-items-center justify-content-center mt-4">
+                    <form id="delete-form" method="POST" action="{{ route('lead.delete') }}">
+                        @csrf
+                        <input type="hidden" name="lead_id" id="lead_id">
                         <a href="#" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</a>
-                        <a href="{{url('leads')}}" class="btn btn-danger">Yes, Delete it</a>
+                        <button  type="submit" class="btn btn-danger">Yes, Delete it</button>
+                    </form>
+                    <script>
+                    $(document).ready(function () {
+                        // Show modal with the correct lead ID
+                        $('#delete_lead').on('show.bs.modal', function (event) {
+                            var button = $(event.relatedTarget); // Button that triggered the modal
+                            var leadId = button.data('lead-id'); // Extract lead-id from data attribute
+                            console.log('Lead ID:', leadId); // Debugging: log the ID to check if it's correct
+
+                            var modal = $(this);
+                            modal.find('#lead_id').val(leadId); // Set the lead-id in the form's hidden input field
+                        });
+
+                        // Handle the form submission using SweetAlert for confirmation
+                        $('#delete-form').submit(function (e) {
+                            e.preventDefault(); // Prevent default form submission
+
+                            // Get the form and form data
+                            var form = $(this);
+                            var formData = new FormData(form[0]); // Collect form data
+                            
+                            // Send AJAX request
+                            $.ajax({
+                                url: form.attr('action'),  // Use the form action for URL
+                                type: form.attr('method'),  // Use form method (POST or DELETE)
+                                data: formData,
+                                processData: false,  // Don't process the data
+                                contentType: false,  // Don't set content-type header
+                                success: function(response) {
+                                    if (response.status === 'success') {
+                                        Swal.fire(
+                                            'Deleted!',
+                                            'The lead has been deleted.',
+                                            'success'
+                                        ).then(() => {
+                                            location.reload(); // Reload the page after deletion success
+                                        });
+                                    } else {
+                                        Swal.fire(
+                                            'Error!',
+                                            'There was an issue deleting the lead.',
+                                            'error'
+                                        );
+                                    }
+                                },
+                                error: function() {
+                                    Swal.fire(
+                                        'Error!',
+                                        'An unexpected error occurred.',
+                                        'error'
+                                    );
+                                }
+                            });
+                        });
+                    });
+                    </script>
+
                     </div>
                 </div>
             </div>

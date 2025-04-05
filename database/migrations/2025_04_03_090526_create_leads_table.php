@@ -15,32 +15,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('leads', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('customer_name');
-            $table->string('customer_company')->nullable();
-            $table->unsignedBigInteger('company_id')->nullable();
-            $table->decimal('value', 10, 2);
-            $table->string('currency', 3);
+            $table->id(); // Auto-incrementing primary key
+            $table->string('lead_name');
+            $table->enum('lead_type', ['Person', 'Organization'])->default('Person'); // Lead type with a default value
+            $table->unsignedBigInteger('client_id')->nullable();
+            $table->foreign('client_id')->references('id')->on('client_companies')->onDelete('cascade')->onUpdate('cascade');
             $table->string('phone');
-            $table->enum('phone_type', ['work', 'home']);
-            $table->unsignedBigInteger('lead_source_id');
-            $table->unsignedBigInteger('lead_status_id');
-            $table->unsignedBigInteger('assigned_to')->nullable();
-            $table->string('priority')->default('cold');
-            $table->text('tags')->nullable();
-            $table->integer('rated')->nullable();
-            $table->text('description');
-            $table->enum('visibility', ['public', 'private'])->default('private');
-            $table->enum('status', ['active', 'inactive'])->default('active');
-            $table->string('city_town')->nullable();
-            $table->text('remarks')->nullable();
-            $table->timestamp('lastdate')->nullable();
-            $table->timestamps();
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('lead_source_id')->references('id')->on('lead_sources')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('lead_status_id')->references('id')->on('lead_statuses')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('assigned_to')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('email');
+            $table->string('address')->nullable();
+            $table->string('source');
+            $table->string('industry');
+            $table->string('company_logo')->nullable();
+            $table->string('owner')->nullable();
+            $table->string('status')->default('active');
+            $table->string('company_id')->nullable(); 
+            $table->foreign('company_id')->references('company_id')->on('companies')->onDelete('cascade')->onUpdate('cascade');
+            $table->timestamps(); // created_at and updated_at timestamps
         });
     }
 

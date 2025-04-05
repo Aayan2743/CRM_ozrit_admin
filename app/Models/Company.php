@@ -19,10 +19,10 @@ class Company extends Model
      * @param string $value
      * @return void
      */
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = Hash::make($value); // Hash the password before saving it
-    }
+    // public function setPasswordAttribute($value)
+    // {
+    //     $this->attributes['password'] = Hash::make($value); // Hash the password before saving it
+    // }
     public static function boot()
     {
         parent::boot();

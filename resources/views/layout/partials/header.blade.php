@@ -26,22 +26,10 @@
 
     <div class="header-user">
         <ul class="nav user-menu">
-            
+
             <!-- Search -->
             <li class="nav-item nav-search-inputs me-auto">
-                <div class="top-nav-search">
-                    <a href="javascript:void(0);" class="responsive-search">
-                        <i class="fa fa-search"></i>
-                    </a>
-                    <form action="#" class="dropdown">
-                        <div class="searchinputs" id="dropdownMenuClickable">
-                            <input type="text" placeholder="Search">
-                            <div class="search-addon">
-                                <button type="submit"><i class="ti ti-command"></i></button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+
             </li>
             <!-- /Search -->
 
@@ -60,11 +48,11 @@
                                     </a>
                                     <ul>
                                         <li><a class="{{ Request::is('deals-dashboard') ? 'active' : '' }}"
-                                            href="{{ url('deals-dashboard') }}">Deals Dashboard</a></li>
+                                                href="{{ url('deals-dashboard') }}">Deals Dashboard</a></li>
                                         <li><a class="{{ Request::is('leads-dashboard') ? 'active' : '' }}"
                                                 href="{{ url('leads-dashboard') }}">Leads Dashboard</a></li>
                                         <li><a class="{{ Request::is('project-dashboard') ? 'active' : '' }}"
-                                            href="{{ url('project-dashboard') }}">Project Dashboard</a></li>
+                                                href="{{ url('project-dashboard') }}">Project Dashboard</a></li>
                                         <li class="submenu">
                                             <a href="#" class="{{ Request::is('dashboard', 'company', 'subscription', 'packages', 'domain', 'purchase-transaction') ? 'active subdrop' : '' }}">
                                                 <i class="ti ti-user-star"></i><span>Super Admin</span>
@@ -83,25 +71,24 @@
                                 </li>
                                 <li class="submenu">
                                     <a href="javascript:void(0);"
-                                        class="{{ Request::is('chat', 'calendar', 'email', 'todo', 'notes', 'file-manager', 'video-call', 'audio-call', 'call-history', 'social-feed', 'kanban-view', 'invoice', 'invoice-details') ? 'subdrop active' : '' }}"
-                                    ><i class="ti ti-brand-airtable"></i><span>Application</span>
+                                        class="{{ Request::is('chat', 'calendar', 'email', 'todo', 'notes', 'file-manager', 'video-call', 'audio-call', 'call-history', 'social-feed', 'kanban-view', 'invoice', 'invoice-details') ? 'subdrop active' : '' }}"><i class="ti ti-brand-airtable"></i><span>Application</span>
                                         <span class="menu-arrow"></span></a>
                                     <ul>
                                         <li><a class="{{ Request::is('chat') ? 'active' : '' }}"
-                                            href="{{ url('chat') }}">Chat</a></li>
+                                                href="{{ url('chat') }}">Chat</a></li>
                                         <li class="submenu submenu-two">
                                             <a href="javascript:void(0);" class="{{ Request::is('video-call', 'audio-call', 'call-history') ? 'subdrop active' : '' }}">Call<span class="menu-arrow inside-submenu"></span></a>
                                             <ul>
                                                 <li><a class="{{ Request::is('video-call') ? 'active' : '' }}"
-                                                    href="{{ url('video-call') }}">Video Call</a></li>
+                                                        href="{{ url('video-call') }}">Video Call</a></li>
                                                 <li><a class="{{ Request::is('audio-call') ? 'active' : '' }}"
                                                         href="{{ url('audio-call') }}">Audio Call</a></li>
                                                 <li><a class="{{ Request::is('call-history') ? 'active' : '' }}"
-                                                    href="{{ url('call-history') }}">Call History</a></li>
+                                                        href="{{ url('call-history') }}">Call History</a></li>
                                             </ul>
                                         </li>
                                         <li><a class="{{ Request::is('calendar') ? 'active' : '' }}"
-                                            href="{{ url('calendar') }}">Calendar</a></li>
+                                                href="{{ url('calendar') }}">Calendar</a></li>
                                         <li><a class="{{ Request::is('email') ? 'active' : '' }}"
                                                 href="{{ url('email') }}">Email</a></li>
                                         <li><a class="{{ Request::is('todo') ? 'active' : '' }}" href="{{ url('todo') }}">To
@@ -116,14 +103,13 @@
                                     </ul>
                                 </li>
                                 <li class="submenu">
-                                    <a href="javascript:void(0);" 
-                                    class="{{ Request::is('layout-mini', 'layout-horizontal-single', 'layout-without-header', 'layout-rtl', 'layout-detached', 'layout-dark') ? 'active subdrop' : '' }}"
-                                    >
+                                    <a href="javascript:void(0);"
+                                        class="{{ Request::is('layout-mini', 'layout-horizontal-single', 'layout-without-header', 'layout-rtl', 'layout-detached', 'layout-dark') ? 'active subdrop' : '' }}">
                                         <i class="ti ti-layout-2"></i><span>layouts</span><span class="menu-arrow"></span>
                                     </a>
                                     <ul>
                                         <li> <a href="{{url('layout-mini')}}" class="{{ Request::is('layout-mini') ? 'active' : '' }}">
-                                            Mini
+                                                Mini
                                             </a>
                                         </li>
                                         <li>
@@ -134,7 +120,7 @@
                                         <li>
                                             <a href="{{url('layout-without-header')}}" class="{{ Request::is('layout-without-header') ? 'active' : '' }}">
                                                 Without Header
-                                        </a>
+                                            </a>
                                         </li>
                                         <li>
                                             <a href="{{url('layout-rtl')}}" class="{{ Request::is('layout-rtl') ? 'active' : '' }}">
@@ -255,7 +241,7 @@
                                     </a>
                                     <ul>
                                         <li><a class="{{ Request::is('lead-reports') ? 'active' : '' }}"
-                                            href="{{ url('lead-reports') }}">Lead Reports</a></li>
+                                                href="{{ url('lead-reports') }}">Lead Reports</a></li>
                                         <li><a class="{{ Request::is('deal-reports') ? 'active' : '' }}"
                                                 href="{{ url('deal-reports') }}">Deal Reports</a></li>
                                         <li><a class="{{ Request::is('contact-reports') ? 'active' : '' }}"
@@ -268,9 +254,9 @@
                                                 href="{{ url('task-reports') }}">Task Reports</a></li>
                                     </ul>
                                 </li>
-                                
+
                                 <li class="submenu">
-                                    <a href="#"  class="{{ Request::is('manage-users', 'roles-permissions','permission', 'delete-request', 'membership-plans', 'membership-addons', 'membership-transactions',
+                                    <a href="#" class="{{ Request::is('manage-users', 'roles-permissions','permission', 'delete-request', 'membership-plans', 'membership-addons', 'membership-transactions',
                                     'countries', 'states', 'cities', 'testimonials', 'faq', 'contact-messages', 'tickets', 'blank-page', 'coming-soon', 'under-maintenance', 'ui-alerts',
                                     'ui-accordion', 'ui-avatar', 'ui-badges', 'ui-borders', 'ui-buttons', 'ui-buttons-group', 'ui-breadcrumb', 'ui-cards', 'ui-carousel',
                                     'ui-colors', 'ui-dropdowns', 'ui-grid', 'ui-images', 'ui-lightbox', 'ui-media', 'ui-modals', 'ui-offcanvas', 'ui-pagination', 'ui-popovers',
@@ -286,26 +272,25 @@
                                     <ul>
                                         <li>
                                             <a class="{{ Request::is('manage-users') ? 'active' : '' }}"
-                                            href="{{ url('manage-users') }}">Manage
+                                                href="{{ url('manage-users') }}">Manage
                                                 Users</a>
                                         </li>
                                         <li><a class="{{ Request::is('roles-permissions','permission') ? 'active' : '' }}"
                                                 href="{{ url('roles-permissions') }}">Roles
-                                                    & Permissions</a>
+                                                & Permissions</a>
                                         </li>
                                         <li><a class="{{ Request::is('delete-request') ? 'active' : '' }}"
                                                 href="{{ url('delete-request') }}">Delete
-                                                    Request</a>
+                                                Request</a>
                                         </li>
                                         <li class="submenu">
                                             <a href="javascript:void(0);"
-                                                class="{{ Request::is('membership-plans', 'membership-addons', 'membership-transactions') ? 'subdrop active' : '' }}"
-                                            >
+                                                class="{{ Request::is('membership-plans', 'membership-addons', 'membership-transactions') ? 'subdrop active' : '' }}">
                                                 <span>Membership</span><span class="menu-arrow"></span>
                                             </a>
                                             <ul>
                                                 <li><a class="{{ Request::is('membership-plans') ? 'active' : '' }}"
-                                                    href="{{ url('membership-plans') }}">Membership Plans</a></li>
+                                                        href="{{ url('membership-plans') }}">Membership Plans</a></li>
                                                 <li><a class="{{ Request::is('membership-addons') ? 'active' : '' }}"
                                                         href="{{ url('membership-addons') }}">Membership Addons</a></li>
                                                 <li><a class="{{ Request::is('membership-transactions') ? 'active' : '' }}"
@@ -318,7 +303,7 @@
                                             </a>
                                             <ul>
                                                 <li><a class="{{ Request::is('countries') ? 'active' : '' }}"
-                                                    href="{{ url('countries') }}">Countries</a></li>
+                                                        href="{{ url('countries') }}">Countries</a></li>
                                                 <li><a class="{{ Request::is('states') ? 'active' : '' }}"
                                                         href="{{ url('states') }}">States</a></li>
                                                 <li><a class="{{ Request::is('cities') ? 'active' : '' }}"
@@ -327,14 +312,14 @@
                                         </li>
                                         <li>
                                             <a class="{{ Request::is('testimonials') ? 'active' : '' }}"
-                                            href="{{ url('testimonials') }}">Testimonials</a>
+                                                href="{{ url('testimonials') }}">Testimonials</a>
                                         </li>
                                         <li>
                                             <a class="{{ Request::is('faq') ? 'active' : '' }}" href="{{ url('faq') }}">FAQ</a>
                                         </li>
                                         <li><a class="{{ Request::is('contact-messages') ? 'active' : '' }}"
-                                            href="{{ url('contact-messages') }}">Contact
-                                                        Messages</a></li>
+                                                href="{{ url('contact-messages') }}">Contact
+                                                Messages</a></li>
                                         <li>
                                             <a class="{{ Request::is('tickets') ? 'active' : '' }}" href="{{ url('tickets') }}">Tickets</a>
                                         </li>
@@ -344,7 +329,7 @@
                                             </a>
                                             <ul>
                                                 <li><a class="{{ Request::is('index') ? 'active' : '' }}"
-                                                    href="{{ url('index') }}">Login</a></li>
+                                                        href="{{ url('index') }}">Login</a></li>
                                                 <li><a class="{{ Request::is('register') ? 'active' : '' }}"
                                                         href="{{ url('register') }}">Register</a></li>
                                                 <li><a class="{{ Request::is('forgot-password') ? 'active' : '' }}"
@@ -356,30 +341,29 @@
                                                 <li><a class="{{ Request::is('two-step-verification') ? 'active' : '' }}"
                                                         href="{{ url('two-step-verification') }}">2 Step Verification</a></li>
                                                 <li><a class="{{ Request::is('lock-screen') ? 'active' : '' }}"
-                                                    href="{{ url('lock-screen') }}">Lock Screen</a></li>
+                                                        href="{{ url('lock-screen') }}">Lock Screen</a></li>
                                             </ul>
                                         </li>
                                         <li class="submenu">
                                             <a href="javascript:void(0);"
-                                                class="{{ Request::is('error-404', 'error-500') ? 'subdrop active' : '' }}"
-                                            >
+                                                class="{{ Request::is('error-404', 'error-500') ? 'subdrop active' : '' }}">
                                                 <span>Error Pages</span><span class="menu-arrow"></span>
                                             </a>
                                             <ul>
                                                 <li><a class="{{ Request::is('error-404') ? 'active' : '' }}"
-                                                    href="{{ url('error-404') }}">404 Error</a></li>
+                                                        href="{{ url('error-404') }}">404 Error</a></li>
                                                 <li><a class="{{ Request::is('error-500') ? 'active' : '' }}"
-                                                    href="{{ url('error-500') }}">500 Error</a></li>
+                                                        href="{{ url('error-500') }}">500 Error</a></li>
                                             </ul>
                                         </li>
                                         <li><a class="{{ Request::is('blank-page') ? 'active' : '' }}"
-                                            href="{{ url('blank-page') }}">Blank Page</a>
+                                                href="{{ url('blank-page') }}">Blank Page</a>
                                         </li>
                                         <li><a class="{{ Request::is('coming-soon') ? 'active' : '' }}"
                                                 href="{{ url('coming-soon') }}">Coming
-                                                    Soon</a></li>
+                                                Soon</a></li>
                                         <li><a class="{{ Request::is('under-maintenance') ? 'active' : '' }}"
-                                            href="{{ url('under-maintenance') }}">Under
+                                                href="{{ url('under-maintenance') }}">Under
                                                 Maintenance</a></li>
                                         <li class="submenu">
                                             <a href="javascript:void(0);"
@@ -392,7 +376,7 @@
                                             </a>
                                             <ul>
                                                 <li><a class="{{ Request::is('ui-alerts') ? 'active' : '' }}"
-                                                    href="{{ url('ui-alerts') }}">Alerts</a></li>
+                                                        href="{{ url('ui-alerts') }}">Alerts</a></li>
                                                 <li><a class="{{ Request::is('ui-accordion') ? 'active' : '' }}"
                                                         href="{{ url('ui-accordion') }}">Accordion</a></li>
                                                 <li><a class="{{ Request::is('ui-avatar') ? 'active' : '' }}"
@@ -453,19 +437,18 @@
                                                         href="{{ url('ui-video') }}">Video</a></li>
                                                 <li><a class="{{ Request::is('ui-sortable') ? 'active' : '' }}"
                                                         href="{{url('ui-sortable')}}">Sortable</a></li>
-                                                <li><a  class="{{ Request::is('ui-swiperjs') ? 'active' : '' }}"
+                                                <li><a class="{{ Request::is('ui-swiperjs') ? 'active' : '' }}"
                                                         href="{{url('ui-swiperjs')}}">Swiperjs</a></li>
                                             </ul>
                                         </li>
                                         <li class="submenu">
                                             <a href="javascript:void(0);"
-                                            class="{{ Request::is('ui-ribbon', 'ui-clipboard', 'ui-drag-drop', 'ui-rangeslider', 'ui-rating', 'ui-text-editor', 'ui-counter', 'ui-scrollbar', 'ui-stickynote', 'ui-timeline') ? 'subdrop active' : '' }}"
-                                            >
+                                                class="{{ Request::is('ui-ribbon', 'ui-clipboard', 'ui-drag-drop', 'ui-rangeslider', 'ui-rating', 'ui-text-editor', 'ui-counter', 'ui-scrollbar', 'ui-stickynote', 'ui-timeline') ? 'subdrop active' : '' }}">
                                                 <span>Advanced UI</span><span class="menu-arrow"></span>
                                             </a>
                                             <ul>
                                                 <li><a class="{{ Request::is('ui-ribbon') ? 'active' : '' }}"
-                                                    href="{{ url('ui-ribbon') }}">Ribbon</a></li>
+                                                        href="{{ url('ui-ribbon') }}">Ribbon</a></li>
                                                 <li><a class="{{ Request::is('ui-clipboard') ? 'active' : '' }}"
                                                         href="{{ url('ui-clipboard') }}">Clipboard</a></li>
                                                 <li><a class="{{ Request::is('ui-drag-drop') ? 'active' : '' }}"
@@ -488,13 +471,12 @@
                                         </li>
                                         <li class="submenu">
                                             <a href="javascript:void(0);"
-                                            class="{{ Request::is('chart-apex', 'chart-js', 'chart-morris', 'chart-flot', 'chart-peity', 'chart-c3') ? 'subdrop active' : '' }}"
-                                            >
+                                                class="{{ Request::is('chart-apex', 'chart-js', 'chart-morris', 'chart-flot', 'chart-peity', 'chart-c3') ? 'subdrop active' : '' }}">
                                                 <span>Charts</span><span class="menu-arrow"></span>
                                             </a>
                                             <ul>
                                                 <li><a class="{{ Request::is('chart-apex') ? 'active' : '' }}"
-                                                    href="{{ url('chart-apex') }}">Apex Charts</a></li>
+                                                        href="{{ url('chart-apex') }}">Apex Charts</a></li>
                                                 <li><a class="{{ Request::is('chart-c3') ? 'active' : '' }}"
                                                         href="{{ url('chart-c3') }}">C3 Charts</a></li>
                                                 <li><a class="{{ Request::is('chart-js') ? 'active' : '' }}"
@@ -509,13 +491,12 @@
                                         </li>
                                         <li class="submenu">
                                             <a href="javascript:void(0);"
-                                            class="{{ Request::is('icon-fontawesome', 'icon-feather', 'icon-ionic', 'icon-material', 'icon-pe7', 'icon-simpleline', 'icon-themify', 'icon-weather', 'icon-typicon', 'icon-flag', 'icon-tabler', 'icon-bootstrap', 'icon-remix') ? 'subdrop active' : '' }}"
-                                            >
+                                                class="{{ Request::is('icon-fontawesome', 'icon-feather', 'icon-ionic', 'icon-material', 'icon-pe7', 'icon-simpleline', 'icon-themify', 'icon-weather', 'icon-typicon', 'icon-flag', 'icon-tabler', 'icon-bootstrap', 'icon-remix') ? 'subdrop active' : '' }}">
                                                 <span>Icons</span><span class="menu-arrow"></span>
                                             </a>
                                             <ul>
                                                 <li><a class="{{ Request::is('icon-fontawesome') ? 'active' : '' }}"
-                                                    href="{{ url('icon-fontawesome') }}">Fontawesome Icons</a></li>
+                                                        href="{{ url('icon-fontawesome') }}">Fontawesome Icons</a></li>
                                                 <li><a class="{{ Request::is('icon-feather') ? 'active' : '' }}"
                                                         href="{{ url('icon-feather') }}">Feather Icons</a></li>
                                                 <li><a class="{{ Request::is('icon-ionic') ? 'active' : '' }}"
@@ -549,12 +530,11 @@
                                             <ul>
                                                 <li class="submenu submenu-two">
                                                     <a href="javascript:void(0);"
-                                                    class="{{ Request::is('form-basic-inputs', 'form-checkbox-radios', 'form-input-groups', 'form-grid-gutters', 'form-select', 'form-mask', 'form-fileupload',
-                                                    'form-validation', 'form-select2', 'form-wizard', 'form-pickers') ? 'subdrop active' : '' }}"
-                                                    >Form Elements<span class="menu-arrow inside-submenu"></span></a>
+                                                        class="{{ Request::is('form-basic-inputs', 'form-checkbox-radios', 'form-input-groups', 'form-grid-gutters', 'form-select', 'form-mask', 'form-fileupload',
+                                                    'form-validation', 'form-select2', 'form-wizard', 'form-pickers') ? 'subdrop active' : '' }}">Form Elements<span class="menu-arrow inside-submenu"></span></a>
                                                     <ul>
                                                         <li><a class="{{ Request::is('form-basic-inputs') ? 'active' : '' }}"
-                                                            href="{{ url('form-basic-inputs') }}">Basic Inputs </a></li>
+                                                                href="{{ url('form-basic-inputs') }}">Basic Inputs </a></li>
                                                         <li><a class="{{ Request::is('form-checkbox-radios') ? 'active' : '' }}"
                                                                 href="{{ url('form-checkbox-radios') }}">Checkbox & Radios </a></li>
                                                         <li><a class="{{ Request::is('form-input-groups') ? 'active' : '' }}"
@@ -571,12 +551,11 @@
                                                 </li>
                                                 <li class="submenu submenu-two">
                                                     <a href="javascript:void(0);"
-                                                    class="{{ Request::is('form-horizontal', 'form-vertical', 'form-floating-labels') ? 'subdrop active' : '' }}"
-                                                    >Layouts<span
+                                                        class="{{ Request::is('form-horizontal', 'form-vertical', 'form-floating-labels') ? 'subdrop active' : '' }}">Layouts<span
                                                             class="menu-arrow inside-submenu"></span></a>
                                                     <ul>
                                                         <li><a class="{{ Request::is('form-horizontal') ? 'active' : '' }}"
-                                                            href="{{ url('form-horizontal') }}">Horizontal Form </a></li>
+                                                                href="{{ url('form-horizontal') }}">Horizontal Form </a></li>
                                                         <li><a class="{{ Request::is('form-vertical') ? 'active' : '' }}"
                                                                 href="{{ url('form-vertical') }}"> Vertical Form </a></li>
                                                         <li><a class="{{ Request::is('form-floating-labels') ? 'active' : '' }}"
@@ -584,7 +563,7 @@
                                                     </ul>
                                                 </li>
                                                 <li><a class="{{ Request::is('form-validation') ? 'active' : '' }}"
-                                                    href="{{ url('form-validation') }}"> Form Validation </a></li>
+                                                        href="{{ url('form-validation') }}"> Form Validation </a></li>
                                                 <li><a class="{{ Request::is('form-select2') ? 'active' : '' }}"
                                                         href="{{ url('form-select2') }}">Select2 </a></li>
                                                 <li><a class="{{ Request::is('form-wizard') ? 'active' : '' }}"
@@ -595,28 +574,26 @@
                                         </li>
                                         <li class="submenu">
                                             <a href="javascript:void(0);"
-                                            class="{{ Request::is('tables-basic', 'data-tables') ? 'subdrop active' : '' }}"
-                                            ><span>Tables</span><span class="menu-arrow"></span></a>
+                                                class="{{ Request::is('tables-basic', 'data-tables') ? 'subdrop active' : '' }}"><span>Tables</span><span class="menu-arrow"></span></a>
                                             <ul>
                                                 <li><a class="{{ Request::is('tables-basic') ? 'active' : '' }}"
-                                                    href="{{ url('tables-basic') }}">Basic Tables </a></li>
+                                                        href="{{ url('tables-basic') }}">Basic Tables </a></li>
                                                 <li><a class="{{ Request::is('data-tables') ? 'active' : '' }}"
-                                                    href="{{ url('data-tables') }}">Data Table </a></li>
+                                                        href="{{ url('data-tables') }}">Data Table </a></li>
                                             </ul>
                                         </li>
                                         <li class="submenu">
                                             <a href="javascript:void(0);"
-                                            class="{{ Request::is('maps-vector', 'maps-leaflet') ? 'subdrop active' : '' }}"
-                                            ><span>Maps</span>
+                                                class="{{ Request::is('maps-vector', 'maps-leaflet') ? 'subdrop active' : '' }}"><span>Maps</span>
                                                 <span class="menu-arrow"></span>
                                             </a>
                                             <ul>
                                                 <li>
                                                     <a class="{{ Request::is('maps-vector') ? 'active' : '' }}"
-                                                    href="{{url('maps-vector')}}">Vector</a>
+                                                        href="{{url('maps-vector')}}">Vector</a>
                                                 </li>
                                                 <li>
-                                                        <a class="{{ Request::is('maps-leaflet') ? 'active' : '' }}"
+                                                    <a class="{{ Request::is('maps-leaflet') ? 'active' : '' }}"
                                                         href="{{url('maps-leaflet')}}">Leaflet</a>
                                                 </li>
                                             </ul>
@@ -626,20 +603,20 @@
                                         <li class="submenu">
                                             <a href="javascript:void(0);"><span>Multi Level</span><span class="menu-arrow"></span></a>
                                             <ul>
-                                            <li><a href="javascript:void(0);">Level 1.1</a></li>
-                                            <li class="submenu submenu-two"><a href="javascript:void(0);">Level 1.2<span class="menu-arrow inside-submenu"></span></a>
-                                            <ul>
-                                                <li><a href="javascript:void(0);">Level 2.1</a></li>
-                                                <li class="submenu submenu-two submenu-three"><a href="javascript:void(0);">Level 2.2<span class="menu-arrow inside-submenu inside-submenu-two"></span></a>
+                                                <li><a href="javascript:void(0);">Level 1.1</a></li>
+                                                <li class="submenu submenu-two"><a href="javascript:void(0);">Level 1.2<span class="menu-arrow inside-submenu"></span></a>
                                                     <ul>
-                                                        <li><a href="javascript:void(0);">Level 3.1</a></li>
-                                                        <li><a href="javascript:void(0);">Level 3.2</a></li>
+                                                        <li><a href="javascript:void(0);">Level 2.1</a></li>
+                                                        <li class="submenu submenu-two submenu-three"><a href="javascript:void(0);">Level 2.2<span class="menu-arrow inside-submenu inside-submenu-two"></span></a>
+                                                            <ul>
+                                                                <li><a href="javascript:void(0);">Level 3.1</a></li>
+                                                                <li><a href="javascript:void(0);">Level 3.2</a></li>
+                                                            </ul>
+                                                        </li>
                                                     </ul>
                                                 </li>
                                             </ul>
                                         </li>
-                                    </ul>
-                                </li>
                                     </ul>
                                 </li>
                                 <li class="submenu">
@@ -652,12 +629,11 @@
                                     <ul>
                                         <li class="submenu">
                                             <a href="javascript:void(0);"
-                                            class="{{ Request::is('profile', 'security', 'notifications', 'connected-apps') ? 'subdrop active' : '' }}"
-                                            ><span>General Settings</span><span class="menu-arrow"></span>
+                                                class="{{ Request::is('profile', 'security', 'notifications', 'connected-apps') ? 'subdrop active' : '' }}"><span>General Settings</span><span class="menu-arrow"></span>
                                             </a>
                                             <ul>
                                                 <li><a class="{{ Request::is('profile') ? 'active' : '' }}"
-                                                    href="{{ url('profile') }}">Profile</a></li>
+                                                        href="{{ url('profile') }}">Profile</a></li>
                                                 <li><a class="{{ Request::is('security') ? 'active' : '' }}"
                                                         href="{{ url('security') }}">Security</a></li>
                                                 <li><a class="{{ Request::is('notifications') ? 'active' : '' }}"
@@ -668,13 +644,12 @@
                                         </li>
                                         <li class="submenu">
                                             <a href="javascript:void(0);"
-                                            class="{{ Request::is('company-settings', 'localization', 'prefixes', 'preference', 'appearance', 'language', 'language-web') ? 'subdrop active' : '' }}"
-                                            >
+                                                class="{{ Request::is('company-settings', 'localization', 'prefixes', 'preference', 'appearance', 'language', 'language-web') ? 'subdrop active' : '' }}">
                                                 <span>Website Settings</span><span class="menu-arrow"></span>
                                             </a>
                                             <ul>
                                                 <li><a class="{{ Request::is('company-settings') ? 'active' : '' }}"
-                                                    href="{{ url('company-settings') }}">Company Settings</a></li>
+                                                        href="{{ url('company-settings') }}">Company Settings</a></li>
                                                 <li><a class="{{ Request::is('localization') ? 'active' : '' }}"
                                                         href="{{ url('localization') }}">Localization</a></li>
                                                 <li><a class="{{ Request::is('prefixes') ? 'active' : '' }}"
@@ -689,13 +664,12 @@
                                         </li>
                                         <li class="submenu">
                                             <a href="javascript:void(0);"
-                                             class="{{ Request::is('invoice-settings', 'printers', 'custom-fields') ? 'subdrop active' : '' }}"
-                                            >
+                                                class="{{ Request::is('invoice-settings', 'printers', 'custom-fields') ? 'subdrop active' : '' }}">
                                                 <span>App Settings</span><span class="menu-arrow"></span>
                                             </a>
                                             <ul>
                                                 <li><a class="{{ Request::is('invoice-settings') ? 'active' : '' }}"
-                                                    href="{{ url('invoice-settings') }}">Invoice Settings</a></li>
+                                                        href="{{ url('invoice-settings') }}">Invoice Settings</a></li>
                                                 <li><a class="{{ Request::is('printers') ? 'active' : '' }}"
                                                         href="{{ url('printers') }}">Printers</a></li>
                                                 <li><a class="{{ Request::is('custom-fields') ? 'active' : '' }}"
@@ -703,14 +677,13 @@
                                             </ul>
                                         </li>
                                         <li class="submenu">
-                                            <a href="javascript:void(0);" 
-                                            class="{{ Request::is('email-settings', 'sms-gateways', 'gdpr-cookies') ? 'subdrop active' : '' }}"
-                                            >
+                                            <a href="javascript:void(0);"
+                                                class="{{ Request::is('email-settings', 'sms-gateways', 'gdpr-cookies') ? 'subdrop active' : '' }}">
                                                 <span>System Settings</span><span class="menu-arrow"></span>
                                             </a>
                                             <ul>
                                                 <li><a class="{{ Request::is('email-settings') ? 'active' : '' }}"
-                                                    href="{{ url('email-settings') }}">Email Settings</a></li>
+                                                        href="{{ url('email-settings') }}">Email Settings</a></li>
                                                 <li><a class="{{ Request::is('sms-gateways') ? 'active' : '' }}"
                                                         href="{{ url('sms-gateways') }}">SMS Gateways</a></li>
                                                 <li><a class="{{ Request::is('gdpr-cookies') ? 'active' : '' }}"
@@ -719,13 +692,12 @@
                                         </li>
                                         <li class="submenu">
                                             <a href="javascript:void(0);"
-                                            class="{{ Request::is('payment-gateways', 'bank-accounts', 'tax-rates', 'currencies') ? 'subdrop active' : '' }}"
-                                            >
+                                                class="{{ Request::is('payment-gateways', 'bank-accounts', 'tax-rates', 'currencies') ? 'subdrop active' : '' }}">
                                                 <span>Financial Settings</span><span class="menu-arrow"></span>
                                             </a>
                                             <ul>
                                                 <li><a class="{{ Request::is('payment-gateways') ? 'active' : '' }}"
-                                                    href="{{ url('payment-gateways') }}">Payment Gateways</a></li>
+                                                        href="{{ url('payment-gateways') }}">Payment Gateways</a></li>
                                                 <li><a class="{{ Request::is('bank-accounts') ? 'active' : '' }}"
                                                         href="{{ url('bank-accounts') }}">Bank Accounts</a></li>
                                                 <li><a class="{{ Request::is('tax-rates') ? 'active' : '' }}"
@@ -736,15 +708,14 @@
                                         </li>
                                         <li class="submenu">
                                             <a href="javascript:void(0);"
-                                            class="{{ Request::is('storage', 'ban-ip-address') ? 'subdrop active' : '' }}"
-                                            >
+                                                class="{{ Request::is('storage', 'ban-ip-address') ? 'subdrop active' : '' }}">
                                                 <span>Other Settings</span><span class="menu-arrow"></span>
                                             </a>
                                             <ul>
                                                 <li><a class="{{ Request::is('storage') ? 'active' : '' }}"
-                                                    href="{{ url('storage') }}">Storage</a></li>
+                                                        href="{{ url('storage') }}">Storage</a></li>
                                                 <li><a class="{{ Request::is('ban-ip-address') ? 'active' : '' }}"
-                                                    href="{{ url('ban-ip-address') }}">Ban IP Address</a></li>
+                                                        href="{{ url('ban-ip-address') }}">Ban IP Address</a></li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -932,7 +903,7 @@
                 </ul>
             </li>
             <!-- /Nav List -->
-            
+
             <!-- Chat -->
             <li class="nav-item nav-item-email nav-item-box">
                 <a href="chat.html">
@@ -976,7 +947,7 @@
                                         </span>
                                         <div class="media-body flex-grow-1">
                                             <p class="noti-details">Denise Nedry replied to Anna Srzand</p>
-                                            <p class="noti-sub-details">“Oh, I finished de-bugging the phones, but the system's compiling for eighteen minutes, or twenty.  So, some minor systems may go on and off for a while.”</p>
+                                            <p class="noti-sub-details">“Oh, I finished de-bugging the phones, but the system's compiling for eighteen minutes, or twenty. So, some minor systems may go on and off for a while.”</p>
                                             <p class="noti-time">Last Wednesday at 9:42 am</p>
                                         </div>
                                     </div>
@@ -1032,9 +1003,15 @@
                         <a class="dropdown-item" href="profile.html">
                             <i class="ti ti-user-pin"></i> My Profile
                         </a>
-                        <a class="dropdown-item" href="login.html">
+                        <!-- <a class="dropdown-item" href="login.html">
                             <i class="ti ti-lock"></i> Logout
-                        </a>
+                        </a> -->
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="dropdown-item">
+                                <i class="ti ti-lock"></i> Logout
+                            </button>
+                        </form>
                     </div>
                 </div>
             </li>

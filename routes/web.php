@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\ClientCompaniesController;
+use App\Http\Controllers\LeadsController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CustomAuthController;
-
+Route::middleware('auth')->group(function () {
 Route::get('deals-dashboard', [CustomAuthController::class, 'deals-dashboard']); 
 Route::get('index', [CustomAuthController::class, 'index'])->name('index');
 Route::post('custom-login', [CustomAuthController::class, 'customLogin'])->name('login.custom'); 
@@ -116,9 +119,11 @@ Route::get('/coming-soon', function () {
     return view('coming-soon');
 })->name('coming-soon');  
 
-Route::get('/companies', function () {
-    return view('companies');
-})->name('companies');  
+Route::get('/companies',  [ClientCompaniesController::class, 'view'])->name('companies'); 
+Route::get('/companies/data', [ClientCompaniesController::class, 'getClientsData'])->name('companies.data');
+Route::post('/edit-company', [ClientCompaniesController::class, 'editClient'])->name('company.edit');
+Route::post('/delete-company', [ClientCompaniesController::class, 'deleteClient'])->name('company.delete');
+Route::post('/companies/store', [ClientCompaniesController::class, 'store'])->name('companies.store'); 
 
 Route::get('/companies-grid', function () {
     return view('companies-grid');
@@ -377,10 +382,14 @@ Route::get('/language-web', function () {
     return view('language-web');
 })->name('language-web'); 
 
-Route::get('/leads', function () {
-    return view('leads');
-})->name('leads'); 
+Route::get('/leads',  [LeadsController::class, 'view'])->name('leads'); 
+// web.php
+Route::get('/leads/data', [LeadsController::class, 'getLeadsData'])->name('leads.data');
+Route::post('/edit-lead', [LeadsController::class, 'editLead'])->name('lead.edit');
+Route::post('/delete-lead', [LeadsController::class, 'deleteLead'])->name('lead.delete');
 
+
+Route::post('/leads/store', [LeadsController::class, 'store'])->name('leads.store'); 
 Route::get('/lead-reports', function () {
     return view('lead-reports');
 })->name('lead-reports'); 
@@ -911,3 +920,8 @@ Route::get('/invoice-details', function () {
 Route::get('/plugin', function () {
     return view('plugin');
 })->name('plugin');
+});
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
